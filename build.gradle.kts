@@ -9,6 +9,10 @@ plugins {
                 id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 }
 
+tasks.create("stage") {
+    dependsOn("installDist")
+}
+
 group = "io.athletex"
 version = "0.0.1"
 application {
