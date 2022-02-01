@@ -49,7 +49,13 @@ tasks.create("stage") {
 tasks{
     shadowJar {
         manifest {
-            attributes(Pair("Main-Class", "io.athletex.athletex-dao-api.ApplicationKt"))
+            attributes(Pair("Main-Class", "io.athletex.ApplicationKt"))
         }
+    }
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "io.athletex.ApplicationKt"
     }
 }
