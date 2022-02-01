@@ -1,1 +1,1 @@
-web: ./build/install/io.athletex.athletex-dao-api/bin/io.athletex.athletex-dao-api
+web: java -jar build/libs/io.athletex.athletex-dao-api-0.0.1.jar

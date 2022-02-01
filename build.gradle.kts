@@ -5,13 +5,11 @@ val exposed_version: String by project
 
 plugins {
     application
+    id("com.github.johnrengelman.shadow") version "7.0.0"
     kotlin("jvm") version "1.6.10"
                 id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 }
 
-tasks.create("stage") {
-    dependsOn("installDist")
-}
 
 group = "io.athletex"
 version = "0.0.1"
@@ -42,4 +40,16 @@ dependencies {
     implementation("org.postgresql:postgresql:42.3.1")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+}
+
+tasks.create("stage") {
+    dependsOn("installDist")
+}
+
+tasks{
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "com.example.ApplicationKt"))
+        }
+    }
 }
