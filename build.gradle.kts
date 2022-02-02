@@ -14,7 +14,8 @@ plugins {
 group = "io.athletex"
 version = "0.0.1"
 application {
-    mainClass.set("io.ktor.server.netty.EngineMain")
+    applicationName = "athletex-dao-api"
+    mainClass.set("io.athletex.ApplicationKt")
 }
 
 repositories {
@@ -49,13 +50,16 @@ tasks.create("stage") {
 tasks{
     shadowJar {
         manifest {
-            attributes(Pair("Main-Class", "io.athletex.ApplicationKt"))
+            attributes(mapOf("Main-Class" to application.mainClass))
         }
     }
 }
 
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "io.athletex.ApplicationKt"
+tasks {
+    withType<Jar> {
+        manifest {
+            attributes(mapOf("Main-Class" to application.mainClass))
+        }
     }
+
 }
