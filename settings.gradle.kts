@@ -1,3 +1,3 @@
 import java.util.Properties
 
-rootProject.name = "io.athletex.athletex-dao-api"
+rootProject.name = "athletex-dao-api"

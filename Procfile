@@ -1,1 +1,1 @@
-web: ./build/install/io.athletex.athletex-dao-api/bin/io.athletex.athletex-dao-api
+web: ./build/install/athletex-dao-api/bin/athletex-dao-api
