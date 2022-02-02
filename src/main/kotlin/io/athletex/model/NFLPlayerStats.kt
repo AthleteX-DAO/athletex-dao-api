@@ -14,7 +14,7 @@ data class NFLPlayerStats(
 ) {
     companion object {
 
-        fun parseStats(row: ResultSet): NFLPlayerStats {
+        fun parseStatHistory(row: ResultSet): NFLPlayerStats {
             val stats: MutableList<Stats> = mutableListOf()
             var nflPlayerStats: NFLPlayerStats? = null
 
