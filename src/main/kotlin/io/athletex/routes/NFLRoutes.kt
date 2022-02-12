@@ -2,10 +2,12 @@ package io.athletex.routes
 
 import io.athletex.model.NFLPlayer
 import io.athletex.model.PlayerStatsResponse
+import io.athletex.routes.payloads.PlayerIds
 import io.athletex.services.NFLPlayerService
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.websocket.*
@@ -30,7 +32,11 @@ fun Application.nflPlayers(nflPlayerService: NFLPlayerService) {
                             call.respond(HttpStatusCode.OK, nflPlayerService.getPlayersOnTeamByPosition(position, team))
                         }
                         else -> {
-                            call.respond(HttpStatusCode.OK, nflPlayerService.getAllPlayers())
+                            val playerIds = call.receiveOrNull<PlayerIds>()
+                            val players =
+                                if (playerIds != null) nflPlayerService.getPlayersById(playerIds)
+                                else nflPlayerService.getAllPlayers()
+                            call.respond(HttpStatusCode.OK, players)
                         }
                     }
                 } catch (e: Exception) {
