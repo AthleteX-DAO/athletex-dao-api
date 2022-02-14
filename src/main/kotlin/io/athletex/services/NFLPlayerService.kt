@@ -2,6 +2,7 @@ package io.athletex.services
 
 import io.athletex.model.NFLPlayer
 import io.athletex.model.NFLPlayerStats
+import io.athletex.routes.payloads.PlayerIds
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -61,6 +62,15 @@ class NFLPlayerService {
             "SELECT * FROM nfl " +
                     "LATEST BY name " +
                     "WHERE id = '$playerId' " +
+                    "ORDER by name"
+        )
+    }
+
+    suspend fun getPlayersById(playerIds: PlayerIds): List<NFLPlayer> = newSuspendedTransaction {
+        executeQueryOfNflPlayers(
+            "SELECT * FROM nfl " +
+                    "LATEST BY name " +
+                    "WHERE id IN (${playerIds.ids.joinToString(",") { id -> "\'$id\'" }}) " +
                     "ORDER by name"
         )
     }
