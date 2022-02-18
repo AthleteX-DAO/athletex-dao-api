@@ -3,7 +3,7 @@ name: AX Dao Api CD
 on:
   push:
     branches:
-      - 'releases/**'
+      - 'release/**'
 
 jobs:
   deploy:
