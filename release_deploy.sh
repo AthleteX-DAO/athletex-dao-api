@@ -9,4 +9,4 @@ docker-compose pull
 docker-compose stop
 echo " * CLEANING OLD IMAGES"
 docker-compose rm -f
-docker-compose up build
+docker-compose up --build
