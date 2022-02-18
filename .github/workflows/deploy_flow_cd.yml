@@ -1,0 +1,18 @@
+name: AX Dao Api CD
+
+on:
+  push:
+    branches:
+      - 'releases/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build docker image
+        uses: appleboy/ssh-action@master
+        with:
+          username: debian
+          host: 139.99.74.201
+          password: ${{ secrets.SSH_PASSPHRASE }}
+          script: 'cd /home/api/athletex-dao-api && ./release_deploy.sh'
