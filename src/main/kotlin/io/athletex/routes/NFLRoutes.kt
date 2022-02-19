@@ -43,7 +43,19 @@ fun Application.nflPlayers(nflPlayerService: NFLPlayerService) {
                     call.respond(HttpStatusCode.InternalServerError, "${e.message}")
                 }
             }
-            
+
+            post("/players") {
+                try {
+                    val playerIds = call.receiveOrNull<PlayerIds>()
+                    val players =
+                        if (playerIds != null) nflPlayerService.getPlayersById(playerIds)
+                        else nflPlayerService.getAllPlayers()
+                    call.respond(HttpStatusCode.OK, players)
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.InternalServerError, "${e.message}")
+                }
+            }
+
             get("/players/{id}") {
                 try {
                     val playerId: Int = call.parameters["id"]!!.toInt()

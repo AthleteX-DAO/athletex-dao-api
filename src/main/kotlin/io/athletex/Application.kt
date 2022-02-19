@@ -25,7 +25,7 @@ fun Application.module() {
     }
     install(DefaultHeaders)
     install(CallLogging) {
-        level = Level.DEBUG
+        level = Level.ERROR
     }
     DatabaseFactory.init()
     configureRouting(NFLPlayerService())
