@@ -58,8 +58,9 @@ fun Application.nflPlayers(nflPlayerService: NFLPlayerService) {
 
             get("/players/{id}") {
                 try {
+                    val targetDay: String? = call.request.queryParameters["at_day"]
                     val playerId: Int = call.parameters["id"]!!.toInt()
-                    call.respond(HttpStatusCode.OK, nflPlayerService.getPlayerById(playerId))
+                    call.respond(HttpStatusCode.OK, nflPlayerService.getPlayerById(playerId, targetDay))
                 }catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.NotFound, "Player by this id is not found")
                 }catch (e: Exception) {
@@ -69,8 +70,10 @@ fun Application.nflPlayers(nflPlayerService: NFLPlayerService) {
 
             get("/players/{id}/history") {
                 try {
+                    val from: String? = call.request.queryParameters["from"]
+                    val until: String? = call.request.queryParameters["until"]
                     val playerId: Int = call.parameters["id"]!!.toInt()
-                    call.respond(HttpStatusCode.OK, nflPlayerService.getPlayerHistory(playerId))
+                    call.respond(HttpStatusCode.OK, nflPlayerService.getPlayerHistory(playerId, from, until))
                 }catch (e: NullPointerException) {
                     call.respond(HttpStatusCode.NotFound, "Player by this id is not found")
                 }catch (e: Exception) {

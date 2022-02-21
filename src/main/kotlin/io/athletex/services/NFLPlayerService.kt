@@ -21,7 +21,7 @@ class NFLPlayerService {
         )
     }
 
-    suspend fun getLatestPlayerStats(): List<NFLPlayer> = newSuspendedTransaction {
+    private suspend fun getLatestPlayerStats(): List<NFLPlayer> = newSuspendedTransaction {
         executeQueryOfNflPlayers(
             "SELECT * FROM nfl " +
                     "LATEST BY name " +
@@ -57,11 +57,12 @@ class NFLPlayerService {
         )
     }
 
-    suspend fun getPlayerById(playerId: Int): NFLPlayer = newSuspendedTransaction {
+    suspend fun getPlayerById(playerId: Int, targetDate: String? = null): NFLPlayer = newSuspendedTransaction {
         executeQueryOfSinglePlayer(
             "SELECT * FROM nfl " +
                     "LATEST BY name " +
                     "WHERE id = '$playerId' " +
+                    if(targetDate != null) addTimestampBound(targetDate) else "" +
                     "ORDER by name"
         )
     }
@@ -75,10 +76,11 @@ class NFLPlayerService {
         )
     }
 
-    suspend fun getPlayerHistory(playerId: Int): NFLPlayerStats = newSuspendedTransaction {
+    suspend fun getPlayerHistory(playerId: Int, from: String?, until: String?): NFLPlayerStats = newSuspendedTransaction {
         executeQueryOfSinglePlayerStats(
             "SELECT * FROM nfl " +
                     "WHERE id = '$playerId' " +
+                    addTimeFilter(from, until) +
                     "ORDER by timestamp DESC ")
     }
 
@@ -129,4 +131,26 @@ class NFLPlayerService {
             delay(10000)
         }
     }
+
+    private fun addTimestampBound(targetDate: String): String =
+        "AND '$targetDate' = to_str(timestamp, 'yyyy-MM-dd')"
+
+    private fun addTimeFilter(fromDate: String?, untilDate: String?): String =
+        when{
+            (!fromDate.isNullOrEmpty() && !untilDate.isNullOrEmpty()) -> addTimestampRange(fromDate, untilDate)
+            (!fromDate.isNullOrEmpty()) -> addFromTimestamp(fromDate)
+            (!untilDate.isNullOrEmpty()) -> addUntilTimestamp(untilDate)
+            else -> ""
+        }
+
+    private fun addFromTimestamp(fromDate: String): String =
+        "timestamp > to_timestamp('$fromDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
+
+    private fun addUntilTimestamp(untilDate: String): String =
+        "timestamp < to_timestamp('$untilDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
+
+    private fun addTimestampRange(fromDate: String, untilDate: String): String =
+        "AND timestamp " +
+        "BETWEEN to_timestamp('$fromDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ') " +
+        "AND to_timestamp('$untilDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
 }
