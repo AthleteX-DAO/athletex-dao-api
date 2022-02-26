@@ -1,6 +1,4 @@
 #!/bin/bash
-
-cd "$SSH_PROJECT_FOLDER" || exit
 echo " * PULLING NEW IMAGES"
 git fetch
 echo " * PULL LATEST RELEASE"
