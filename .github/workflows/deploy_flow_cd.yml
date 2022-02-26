@@ -9,10 +9,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Build docker image
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: SSH to Server
         uses: appleboy/ssh-action@master
         with:
           username: debian
           host: 139.99.74.201
           password: ${{ secrets.SSH_PASSPHRASE }}
-          script: 'cd /home/api/athletex-dao-api && ./release_deploy.sh'
+          script: 'cd /home/api/athletex-dao-api && git checkout ${{ steps.extract_branch.outputs.branch }} && ./release_deploy.sh'

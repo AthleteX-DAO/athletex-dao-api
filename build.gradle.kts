@@ -12,7 +12,7 @@ plugins {
 
 
 group = "io.athletex"
-version = "0.0.1"
+version = "1.1.0"
 application {
     applicationName = "athletex-dao-api"
     mainClass.set("io.athletex.ApplicationKt")
