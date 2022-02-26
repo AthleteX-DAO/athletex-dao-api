@@ -19,6 +19,10 @@ data class NFLPlayer(
     val OffensiveSnapsPlayed: Double,
     val DefensiveSnapsPlayed: Double,
     val price: Double,
+    val Touchdowns: Double,
+    val PassingInterceptions: Double,
+    val FumblesLost: Double,
+    val RushingTouchdowns: Double,
     val timestamp: String,
 ){
     companion object {
@@ -37,6 +41,10 @@ data class NFLPlayer(
                 OffensiveSnapsPlayed = row.getDouble(NFLPlayers.offensiveSnapsPlayed.name),
                 DefensiveSnapsPlayed = row.getDouble(NFLPlayers.defensiveSnapsPlayed.name),
                 price = row.getDouble(NFLPlayers.price.name),
+                Touchdowns = row.getDouble(NFLPlayers.touchdowns.name),
+                PassingInterceptions = row.getDouble(NFLPlayers.passingInterceptions.name),
+                FumblesLost = row.getDouble(NFLPlayers.fumblesLost.name),
+                RushingTouchdowns = row.getDouble(NFLPlayers.rushingTouchdowns.name),
                 timestamp = row.getString(NFLPlayers.timestamp.name).toString(),
             )
         }
