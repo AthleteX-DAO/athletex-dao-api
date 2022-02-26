@@ -8,6 +8,6 @@ docker-compose stop
 echo " * CLEANING OLD IMAGES"
 docker-compose rm -f
 echo " * RESTART CONTAINER WITH LATEST IMAGE"
-docker-compose up -d
+sudo docker-compose up -d
 echo " * PRUNE OLD IMAGES"
 docker image prune -af
