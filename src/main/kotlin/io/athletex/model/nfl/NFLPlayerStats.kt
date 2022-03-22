@@ -1,4 +1,4 @@
-package io.athletex.model
+package io.athletex.model.nfl
 
 import io.athletex.db.models.NFLPlayers
 import kotlinx.serialization.Serializable

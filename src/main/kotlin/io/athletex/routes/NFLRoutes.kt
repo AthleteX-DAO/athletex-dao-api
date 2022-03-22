@@ -1,7 +1,7 @@
 package io.athletex.routes
 
-import io.athletex.model.NFLPlayer
-import io.athletex.model.PlayerStatsResponse
+import io.athletex.model.nfl.NFLPlayer
+import io.athletex.model.nfl.PlayerStatsResponse
 import io.athletex.routes.payloads.PlayerIds
 import io.athletex.services.NFLPlayerService
 import io.ktor.application.*
@@ -14,35 +14,10 @@ import io.ktor.websocket.*
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.serialization.json.Json
 
-fun Application.nflPlayers(nflPlayerService: NFLPlayerService) {
+fun Application.nflRoutes(nflPlayerService: NFLPlayerService) {
     routing {
         route("/nfl") {
-            get("/players") {
-                val team: String = call.request.queryParameters["team"] ?: ""
-                val position: String = call.request.queryParameters["position"] ?: ""
-                try {
-                    when {
-                        team.isNotBlank() && position.isBlank() -> {
-                            call.respond(HttpStatusCode.OK, nflPlayerService.getPlayersByTeam(team))
-                        }
-                        team.isBlank() && position.isNotBlank() -> {
-                            call.respond(HttpStatusCode.OK, nflPlayerService.getPlayersByPosition(position))
-                        }
-                        team.isNotBlank() && position.isNotBlank() -> {
-                            call.respond(HttpStatusCode.OK, nflPlayerService.getPlayersOnTeamByPosition(position, team))
-                        }
-                        else -> {
-                            val playerIds = call.receiveOrNull<PlayerIds>()
-                            val players =
-                                if (playerIds != null) nflPlayerService.getPlayersById(playerIds)
-                                else nflPlayerService.getAllPlayers()
-                            call.respond(HttpStatusCode.OK, players)
-                        }
-                    }
-                } catch (e: Exception) {
-                    call.respond(HttpStatusCode.InternalServerError, "${e.message}")
-                }
-            }
+            getPlayersByFilters(nflPlayerService)
 
             post("/players") {
                 try {
@@ -110,3 +85,4 @@ fun Application.nflPlayers(nflPlayerService: NFLPlayerService) {
         }
     }
 }
+

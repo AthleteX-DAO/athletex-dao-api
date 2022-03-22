@@ -1,7 +1,9 @@
 package io.athletex.services
 
-import io.athletex.model.NFLPlayer
-import io.athletex.model.NFLPlayerStats
+import io.athletex.db.Table.NFL
+import io.athletex.db.queryLatestPlayerRecordsNameOrdered
+import io.athletex.model.nfl.NFLPlayer
+import io.athletex.model.nfl.NFLPlayerStats
 import io.athletex.routes.payloads.PlayerIds
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
@@ -11,13 +13,11 @@ import kotlinx.coroutines.isActive
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
-class NFLPlayerService {
+class NFLPlayerService : PlayerService{
 
-    suspend fun getAllPlayers(): List<NFLPlayer> = newSuspendedTransaction {
+    override suspend fun getAllPlayers(): List<NFLPlayer> = newSuspendedTransaction {
         executeQueryOfNflPlayers(
-            "SELECT * FROM nfl " +
-                    "LATEST BY name " +
-                    "ORDER by name"
+            queryLatestPlayerRecordsNameOrdered(NFL)
         )
     }
 
@@ -29,7 +29,7 @@ class NFLPlayerService {
         )
     }
 
-    suspend fun getPlayersByTeam(team: String): List<NFLPlayer> = newSuspendedTransaction {
+    override suspend fun getPlayersByTeam(team: String): List<NFLPlayer> = newSuspendedTransaction {
         executeQueryOfNflPlayers(
             "SELECT * FROM nfl " +
                     "LATEST BY name " +
@@ -38,7 +38,7 @@ class NFLPlayerService {
         )
     }
 
-    suspend fun getPlayersByPosition(position: String): List<NFLPlayer> = newSuspendedTransaction {
+    override suspend fun getPlayersByPosition(position: String): List<NFLPlayer> = newSuspendedTransaction {
         executeQueryOfNflPlayers(
             "SELECT * FROM nfl " +
                     "LATEST BY name " +
@@ -47,7 +47,9 @@ class NFLPlayerService {
         )
     }
 
-    suspend fun getPlayersOnTeamByPosition(position: String, team: String): List<NFLPlayer> = newSuspendedTransaction {
+
+
+    override suspend fun getPlayersOnTeamByPosition(position: String, team: String): List<NFLPlayer> = newSuspendedTransaction {
         executeQueryOfNflPlayers(
             "SELECT * FROM nfl " +
                     "LATEST BY name " +
@@ -67,7 +69,7 @@ class NFLPlayerService {
         )
     }
 
-    suspend fun getPlayersById(playerIds: PlayerIds): List<NFLPlayer> = newSuspendedTransaction {
+    override suspend fun getPlayersById(playerIds: PlayerIds): List<NFLPlayer> = newSuspendedTransaction {
         executeQueryOfNflPlayers(
             "SELECT * FROM nfl " +
                     "LATEST BY name " +
@@ -92,7 +94,7 @@ class NFLPlayerService {
                 queryStatement
             ) { resultSet ->
                 while (resultSet.next())
-                    nflPlayers.add(NFLPlayer.parse(resultSet))
+                    nflPlayers.add(NFLPlayer.parseSQL(resultSet))
             }
         return nflPlayers
     }
@@ -103,7 +105,7 @@ class NFLPlayerService {
             .current()
             .exec(queryStatement) { resultSet ->
                 while (resultSet.next())
-                    nflPlayer = NFLPlayer.parse(resultSet)
+                    nflPlayer = NFLPlayer.parseSQL(resultSet)
             }
         return nflPlayer!!
     }

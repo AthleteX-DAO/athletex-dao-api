@@ -1,4 +1,4 @@
-package io.athletex.model
+package io.athletex.model.nfl
 
 import io.athletex.db.models.NFLPlayers
 import kotlinx.serialization.Serializable
@@ -26,7 +26,7 @@ data class NFLPlayer(
     val timestamp: String,
 ){
     companion object {
-        fun parse(row: ResultSet): NFLPlayer {
+        fun parseSQL(row: ResultSet): NFLPlayer {
             return NFLPlayer(
                 name = row.getString(NFLPlayers.name.name),
                 id = row.getString(NFLPlayers.id.name).toInt(),
