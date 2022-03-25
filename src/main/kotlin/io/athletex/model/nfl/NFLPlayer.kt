@@ -1,6 +1,7 @@
 package io.athletex.model.nfl
 
 import io.athletex.db.models.NFLPlayers
+import io.athletex.model.Player
 import kotlinx.serialization.Serializable
 import java.sql.ResultSet
 
@@ -24,7 +25,7 @@ data class NFLPlayer(
     val FumblesLost: Double,
     val RushingTouchdowns: Double,
     val timestamp: String,
-){
+): Player() {
     companion object {
         fun parseSQL(row: ResultSet): NFLPlayer {
             return NFLPlayer(

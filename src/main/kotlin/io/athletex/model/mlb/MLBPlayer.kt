@@ -1,7 +1,10 @@
 package io.athletex.model.mlb
 
+import io.athletex.model.Player
+import kotlinx.serialization.Serializable
 import java.sql.ResultSet
 
+@Serializable
 data class MLBPlayer(
     val id: Int,
     val name: String,
@@ -21,42 +24,36 @@ data class MLBPlayer(
     val errors: Double,
     val saves: Double,
     val strikeOuts: Double,
-    val pitchingHits: Double,
-    val pitchingRuns: Double,
     val stolenBases: Double,
     val plateAppearances: Double,
     val weightedOnBasePercentage: Double,
-    val igWeightedOnBasePercentage: Double,
     val price: Double,
-) {
+): Player() {
     companion object {
         fun parseSQL(row: ResultSet): MLBPlayer{
             return MLBPlayer(
-                id = row.getInt("id"),
-                name = row.getString("name"),
-                team = row.getString("team"),
-                position = row.getString("position"),
-                started = row.getDouble("started"),
-                games = row.getDouble("games"),
-                atBats = row.getDouble("atBats"),
-                runs = row.getDouble("runs"),
-                singles = row.getDouble("singles"),
-                triples = row.getDouble("triples"),
-                homeRuns = row.getDouble("homeRuns"),
-                inningsPlayed = row.getDouble("inningsPlayed"),
-                battingAverage = row.getDouble("battingAverage"),
-                outs = row.getDouble("outs"),
-                walks = row.getDouble("walks"),
-                errors = row.getDouble("errors"),
-                saves = row.getDouble("inningsPlayed"),
-                strikeOuts = row.getDouble("strikeOuts"),
-                pitchingHits = row.getDouble("pitchingHits"),
-                pitchingRuns = row.getDouble("pitchingRuns"),
-                stolenBases = row.getDouble("stolenBases"),
-                plateAppearances = row.getDouble("plateAppearances"),
-                weightedOnBasePercentage = row.getDouble("weightedOnBasePercentage"),
-                igWeightedOnBasePercentage = row.getDouble("igWeightedOnBasePercentage"),
-                price = row.getDouble("price"),
+                id = row.getInt(MLBPlayer::id.name),
+                name = row.getString(MLBPlayer::name.name),
+                team = row.getString(MLBPlayer::team.name),
+                position = row.getString(MLBPlayer::position.name),
+                started = row.getDouble(MLBPlayer::started.name),
+                games = row.getDouble(MLBPlayer::games.name),
+                atBats = row.getDouble(MLBPlayer::atBats.name),
+                runs = row.getDouble(MLBPlayer::runs.name),
+                singles = row.getDouble(MLBPlayer::singles.name),
+                triples = row.getDouble(MLBPlayer::triples.name),
+                homeRuns = row.getDouble(MLBPlayer::homeRuns.name),
+                inningsPlayed = row.getDouble(MLBPlayer::inningsPlayed.name),
+                battingAverage = row.getDouble(MLBPlayer::battingAverage.name),
+                outs = row.getDouble(MLBPlayer::outs.name),
+                walks = row.getDouble(MLBPlayer::walks.name),
+                errors = row.getDouble(MLBPlayer::errors.name),
+                saves = row.getDouble(MLBPlayer::inningsPlayed.name),
+                strikeOuts = row.getDouble(MLBPlayer::strikeOuts.name),
+                stolenBases = row.getDouble(MLBPlayer::stolenBases.name),
+                plateAppearances = row.getDouble(MLBPlayer::plateAppearances.name),
+                weightedOnBasePercentage = row.getDouble(MLBPlayer::weightedOnBasePercentage.name),
+                price = row.getDouble(MLBPlayer::price.name),
             )
         }
     }
