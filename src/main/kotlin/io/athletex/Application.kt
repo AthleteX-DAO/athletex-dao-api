@@ -4,7 +4,6 @@ import io.athletex.db.DatabaseFactory
 import io.athletex.plugins.configureRouting
 import io.athletex.plugins.configureSecurity
 import io.athletex.plugins.configureSerialization
-import io.athletex.services.NFLPlayerService
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.cio.websocket.*
@@ -28,7 +27,7 @@ fun Application.module() {
         level = Level.ERROR
     }
     DatabaseFactory.init()
-    configureRouting(NFLPlayerService())
+    configureRouting()
     configureSerialization()
     configureSecurity()
 }

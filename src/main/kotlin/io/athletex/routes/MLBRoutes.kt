@@ -1,8 +1,8 @@
 package io.athletex.routes
 
-import io.athletex.model.nfl.NFLStatsResponse
-import io.athletex.routes.SportEndpoint.NFL
-import io.athletex.services.NFLPlayerService
+import io.athletex.model.mlb.MLBStatsResponse
+import io.athletex.routes.SportEndpoint.MLB
+import io.athletex.services.MLBPlayerService
 import io.ktor.application.*
 import io.ktor.http.cio.websocket.*
 import io.ktor.routing.*
@@ -10,16 +10,16 @@ import io.ktor.websocket.*
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.serialization.json.Json
 
-fun Application.nflFeedRoutes(nflPlayerService: NFLPlayerService) {
+fun Application.mlbFeedRoutes(mlbPlayerService: MLBPlayerService) {
     routing {
-        route(NFL.value) {
+        route(MLB.value) {
             webSocket("/players/feed") {
                 try {
-                    nflPlayerService.getStatsFeed().collect { players ->
+                    mlbPlayerService.getStatsFeed().collect { players ->
                         send(
                             Json.encodeToString(
-                                NFLStatsResponse.serializer(),
-                                NFLStatsResponse(players)
+                                MLBStatsResponse.serializer(),
+                                MLBStatsResponse(players)
                             )
                         )
                     }

@@ -1,6 +1,7 @@
-package io.athletex.model
+package io.athletex.model.nfl
 
 import io.athletex.db.models.NFLPlayers
+import io.athletex.model.PlayerStats
 import kotlinx.serialization.Serializable
 import java.sql.ResultSet
 
@@ -11,7 +12,7 @@ data class NFLPlayerStats(
     val team: String,
     val position: String,
     val stat_history: List<Stats>
-) {
+): PlayerStats() {
     companion object {
 
         fun parseStatHistory(row: ResultSet): NFLPlayerStats {
