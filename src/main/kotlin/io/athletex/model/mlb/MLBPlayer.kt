@@ -28,6 +28,7 @@ data class MLBPlayer(
     val plateAppearances: Double,
     val weightedOnBasePercentage: Double,
     val price: Double,
+    val timeStamp: String,
 ): Player() {
     companion object {
         fun parseSQL(row: ResultSet): MLBPlayer{
@@ -54,6 +55,7 @@ data class MLBPlayer(
                 plateAppearances = row.getDouble(MLBPlayer::plateAppearances.name),
                 weightedOnBasePercentage = row.getDouble(MLBPlayer::weightedOnBasePercentage.name),
                 price = row.getDouble(MLBPlayer::price.name),
+                timeStamp = row.getString(MLBPlayer::timeStamp.name)
             )
         }
     }

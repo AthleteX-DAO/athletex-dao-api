@@ -46,7 +46,7 @@ data class NFLPlayer(
                 PassingInterceptions = row.getDouble(NFLPlayers.passingInterceptions.name),
                 FumblesLost = row.getDouble(NFLPlayers.fumblesLost.name),
                 RushingTouchdowns = row.getDouble(NFLPlayers.rushingTouchdowns.name),
-                timestamp = row.getString(NFLPlayers.timestamp.name).toString(),
+                timestamp = row.getString(NFLPlayers.timestamp.name),
             )
         }
     }
