@@ -20,5 +20,6 @@ jobs:
           host: 139.99.74.201
           password: ${{ secrets.SSH_PASSPHRASE }}
           script: 'cd /home/api/athletex-dao-api &&
+           git fetch && 
            git checkout ${{ steps.extract_branch.outputs.branch }} &&
            ./release_deploy.sh'
