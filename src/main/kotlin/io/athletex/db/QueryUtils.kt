@@ -64,10 +64,10 @@ private fun addTimeFilter(fromDate: String?, untilDate: String?): String =
     }
 
 private fun addFromTimestamp(fromDate: String): String =
-    "timestamp > to_timestamp('$fromDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
+    "AND timestamp > to_timestamp('$fromDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
 
 private fun addUntilTimestamp(untilDate: String): String =
-    "timestamp < to_timestamp('$untilDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
+    "AND timestamp < to_timestamp('$untilDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
 
 private fun addTimestampRange(fromDate: String, untilDate: String): String =
     "AND timestamp " +
