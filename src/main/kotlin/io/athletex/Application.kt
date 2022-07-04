@@ -6,6 +6,7 @@ import io.athletex.plugins.configureSecurity
 import io.athletex.plugins.configureSerialization
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
 import io.ktor.websocket.*
 import org.slf4j.event.Level
@@ -22,7 +23,20 @@ fun Application.module() {
         maxFrameSize = Long.MAX_VALUE
         masking = false
     }
+    install(ForwardedHeaderSupport)
     install(DefaultHeaders)
+    install(CORS){
+        method(HttpMethod.Options)
+        method(HttpMethod.Get)
+        method(HttpMethod.Post)
+        method(HttpMethod.Put)
+        method(HttpMethod.Delete)
+        method(HttpMethod.Patch)
+        header(HttpHeaders.AccessControlAllowHeaders)
+        header(HttpHeaders.ContentType)
+        header(HttpHeaders.AccessControlAllowOrigin)
+        anyHost()
+    }
     install(CallLogging) {
         level = Level.ERROR
     }
