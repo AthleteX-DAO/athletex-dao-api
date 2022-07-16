@@ -2,6 +2,7 @@ package io.athletex.services
 
 import io.athletex.db.*
 import io.athletex.db.Table.NFL
+import io.athletex.model.PlayerStats
 import io.athletex.model.nfl.NFLPlayer
 import io.athletex.model.nfl.NFLPlayerStats
 import io.athletex.routes.payloads.PlayerIds
@@ -66,6 +67,10 @@ class NFLPlayerService : PlayerService {
                 )
             ) { NFLPlayerStats.parseStatHistory(it) }
         }
+
+    override suspend fun getPlayersHistories(playerIds: PlayerIds, from: String?, until: String?): List<PlayerStats> {
+        return playerIds.ids.map { getPlayerHistory(it, from, until) }
+    }
 
     override suspend fun getStatsFeed(): Flow<List<NFLPlayer>> = flow {
         while (currentCoroutineContext().isActive) {

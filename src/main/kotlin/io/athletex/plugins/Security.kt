@@ -1,10 +1,6 @@
 package io.athletex.plugins
 
-import io.ktor.auth.*
-import io.ktor.util.*
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
+import io.ktor.server.application.*
 
 fun Application.configureSecurity() {
     

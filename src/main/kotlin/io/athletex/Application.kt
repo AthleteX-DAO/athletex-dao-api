@@ -4,11 +4,13 @@ import io.athletex.db.DatabaseFactory
 import io.athletex.plugins.configureRouting
 import io.athletex.plugins.configureSecurity
 import io.athletex.plugins.configureSerialization
-import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
-import io.ktor.websocket.*
+import io.ktor.server.application.*
+import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.defaultheaders.*
+import io.ktor.server.plugins.forwardedheaders.*
+import io.ktor.server.websocket.*
 import org.slf4j.event.Level
 import java.time.Duration
 
@@ -23,23 +25,25 @@ fun Application.module() {
         maxFrameSize = Long.MAX_VALUE
         masking = false
     }
-    install(ForwardedHeaderSupport)
+    install(XForwardedHeaders)
     install(DefaultHeaders)
     install(CORS){
-        method(HttpMethod.Options)
-        method(HttpMethod.Get)
-        method(HttpMethod.Post)
-        method(HttpMethod.Put)
-        method(HttpMethod.Delete)
-        method(HttpMethod.Patch)
-        header(HttpHeaders.AccessControlAllowHeaders)
-        header(HttpHeaders.ContentType)
-        header(HttpHeaders.AccessControlAllowOrigin)
+        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
+        allowMethod(HttpMethod.Patch)
+        allowHeader(HttpHeaders.AccessControlAllowHeaders)
+        allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.AccessControlAllowOrigin)
         anyHost()
     }
+
     install(CallLogging) {
         level = Level.ERROR
     }
+
     DatabaseFactory.init()
     configureRouting()
     configureSerialization()

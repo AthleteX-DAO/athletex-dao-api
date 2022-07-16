@@ -3,10 +3,10 @@ package io.athletex.routes
 import io.athletex.model.nfl.NFLStatsResponse
 import io.athletex.routes.SportEndpoint.NFL
 import io.athletex.services.NFLPlayerService
-import io.ktor.application.*
-import io.ktor.http.cio.websocket.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
 import io.ktor.websocket.*
+import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.serialization.json.Json
 

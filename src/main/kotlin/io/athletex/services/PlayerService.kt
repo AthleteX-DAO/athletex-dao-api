@@ -16,6 +16,7 @@ interface PlayerService {
     suspend fun getPlayerById(playerId: Int, targetDate: String? = null): Player
     suspend fun getLatestPlayerStats(): List<Player>
     suspend fun getPlayerHistory(playerId: Int, from: String?, until: String?): PlayerStats
+    suspend fun getPlayersHistories(playerIds: PlayerIds, from: String?, until: String?): List<PlayerStats>
     suspend fun getStatsFeed(): Flow<List<Player>>
     suspend fun getStatsFeedByPlayer(id: Int): Flow<Player>
 

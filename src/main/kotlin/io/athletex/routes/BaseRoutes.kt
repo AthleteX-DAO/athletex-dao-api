@@ -3,13 +3,13 @@ package io.athletex.routes
 import io.athletex.model.Player
 import io.athletex.routes.payloads.PlayerIds
 import io.athletex.services.PlayerService
-import io.ktor.application.*
+import io.ktor.server.application.*
 import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
 import io.ktor.websocket.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 
 internal fun Route.getPlayersByFilters(playerService: PlayerService) {
@@ -29,9 +29,8 @@ internal fun Route.getPlayersByFilters(playerService: PlayerService) {
                 }
                 else -> {
                     val playerIds = call.receiveOrNull<PlayerIds>()
-                    val players =
-                        if (playerIds != null) playerService.getPlayersById(playerIds)
-                        else playerService.getAllPlayers()
+                    val players = if (playerIds != null) playerService.getPlayersById(playerIds)
+                    else playerService.getAllPlayers()
                     call.respond(HttpStatusCode.OK, players)
                 }
             }
@@ -84,6 +83,23 @@ internal fun Route.getPlayerHistory(playerService: PlayerService) {
     }
 }
 
+internal fun Route.getPlayersHistories(playerService: PlayerService) {
+    post("/players/history") {
+        try {
+            val from: String? = call.request.queryParameters["from"]
+            val until: String? = call.request.queryParameters["until"]
+            val playerIds = call.receiveOrNull<PlayerIds>()
+            if (playerIds != null) {
+                call.respond(HttpStatusCode.OK, playerService.getPlayersHistories(playerIds, from, until))
+            } else {
+                call.respond(HttpStatusCode.BadRequest, "ids of athletes were missing")
+            }
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
+        }
+    }
+}
+
 internal fun Route.getStatsFeedForPlayerById(
     playerService: PlayerService,
     encodePlayerToString: (Player) -> String
@@ -102,4 +118,3 @@ internal fun Route.getStatsFeedForPlayerById(
         }
     }
 }
-

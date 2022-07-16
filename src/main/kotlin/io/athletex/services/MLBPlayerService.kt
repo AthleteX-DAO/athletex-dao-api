@@ -63,6 +63,10 @@ class MLBPlayerService : PlayerService {
             ) { MLBPlayerStats.parseStatHistory(it) }
         }
 
+    override suspend fun getPlayersHistories(playerIds: PlayerIds, from: String?, until: String?): List<MLBPlayerStats> {
+        return playerIds.ids.map { getPlayerHistory(it, from, until) }
+    }
+
     override suspend fun getLatestPlayerStats(): List<MLBPlayer> = newSuspendedTransaction {
         executeQueryOfPlayers(queryStatsForSinglePlayer(MLB)) { MLBPlayer.parseSQL(it) }
     }

@@ -1,6 +1,8 @@
 package io.athletex.db
 
 import io.athletex.routes.payloads.PlayerIds
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 enum class Table(val tableName: String) {
     NFL("nfl"),
@@ -60,8 +62,15 @@ private fun addTimeFilter(fromDate: String?, untilDate: String?): String =
         (!fromDate.isNullOrEmpty() && !untilDate.isNullOrEmpty()) -> addTimestampRange(fromDate, untilDate)
         (!fromDate.isNullOrEmpty()) -> addFromTimestamp(fromDate)
         (!untilDate.isNullOrEmpty()) -> addUntilTimestamp(untilDate)
-        else -> ""
+        else -> addDefaultRange()
     }
+
+private fun addDefaultRange(): String =
+    "AND timestamp > to_timestamp('${
+        DateTimeFormatter.ISO_DATE.format(
+            LocalDate.now().minusMonths(1)
+        )
+    }:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
 
 private fun addFromTimestamp(fromDate: String): String =
     "AND timestamp > to_timestamp('$fromDate:00:00:00.000000Z', 'yyyy-MM-dd:HH:mm:ss.SSSUUUZ')"
