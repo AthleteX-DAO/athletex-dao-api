@@ -27,4 +27,4 @@ resources:
     memory: 128Mi
 
 env:
-  DATABASE_URL: 'ax-db-svc'
+  DB_URL: 'ax-db-svc'
