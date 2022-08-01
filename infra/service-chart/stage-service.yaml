@@ -27,4 +27,4 @@ resources:
     memory: 256Mi
 
 env:
-  DB_URL: 'ax-db-svc'
+  DB_URL: 'jdbc:postgres://ax-db-questdb:8080/qdb'
