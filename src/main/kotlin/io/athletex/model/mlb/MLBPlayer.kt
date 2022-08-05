@@ -6,8 +6,8 @@ import java.sql.ResultSet
 
 @Serializable
 data class MLBPlayer(
-    val id: Int,
-    val name: String,
+    override val id: Int,
+    override val name: String,
     val team: String,
     val position: String,
     val started: Double,
@@ -27,8 +27,8 @@ data class MLBPlayer(
     val stolenBases: Double,
     val plateAppearances: Double,
     val weightedOnBasePercentage: Double,
-    val price: Double,
-    val timeStamp: String,
+    override val price: Double,
+    override val timestamp: String,
 ): Player() {
     companion object {
         fun parseSQL(row: ResultSet): MLBPlayer{
@@ -55,7 +55,7 @@ data class MLBPlayer(
                 plateAppearances = row.getDouble(MLBPlayer::plateAppearances.name),
                 weightedOnBasePercentage = row.getDouble(MLBPlayer::weightedOnBasePercentage.name),
                 price = row.getDouble(MLBPlayer::price.name),
-                timeStamp = row.getString(MLBPlayer::timeStamp.name)
+                timestamp = row.getString(MLBPlayer::timestamp.name)
             )
         }
     }

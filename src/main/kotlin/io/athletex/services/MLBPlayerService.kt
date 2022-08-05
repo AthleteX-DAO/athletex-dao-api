@@ -13,17 +13,18 @@ import kotlinx.coroutines.isActive
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class MLBPlayerService : PlayerService {
+    override val table: Table = MLB
 
     override suspend fun getAllPlayers(): List<MLBPlayer> = newSuspendedTransaction {
-        executeQueryOfPlayers(queryLatestPlayerRecords(MLB)) { MLBPlayer.parseSQL(it) }
+        executeQueryOfPlayers(queryLatestPlayerRecords(table)) { MLBPlayer.parseSQL(it) }
     }
 
     override suspend fun getPlayersByTeam(team: String): List<MLBPlayer> = newSuspendedTransaction {
-        executeQueryOfPlayers(queryLatestPlayerRecordsByTeam(team, MLB)) { MLBPlayer.parseSQL(it) }
+        executeQueryOfPlayers(queryLatestPlayerRecordsByTeam(team, table)) { MLBPlayer.parseSQL(it) }
     }
 
     override suspend fun getPlayersByPosition(position: String): List<MLBPlayer> = newSuspendedTransaction {
-        executeQueryOfPlayers(queryLatestPlayerRecordsByPosition(position, MLB)) { MLBPlayer.parseSQL(it) }
+        executeQueryOfPlayers(queryLatestPlayerRecordsByPosition(position, table)) { MLBPlayer.parseSQL(it) }
     }
 
     override suspend fun getPlayersOnTeamByPosition(position: String, team: String): List<MLBPlayer> =
@@ -32,13 +33,13 @@ class MLBPlayerService : PlayerService {
                 queryLatestPlayerRecordsOnTeamByPosition(
                     position,
                     team,
-                    MLB
+                    table
                 )
             ) { MLBPlayer.parseSQL(it) }
         }
 
     override suspend fun getPlayersById(playerIds: PlayerIds): List<MLBPlayer> = newSuspendedTransaction {
-        executeQueryOfPlayers(queryLatestPlayerRecordsById(playerIds, MLB)) { MLBPlayer.parseSQL(it) }
+        executeQueryOfPlayers(queryLatestPlayerRecordsById(playerIds, table)) { MLBPlayer.parseSQL(it) }
     }
 
     override suspend fun getPlayerById(playerId: Int, targetDate: String?): MLBPlayer = newSuspendedTransaction {
@@ -46,7 +47,7 @@ class MLBPlayerService : PlayerService {
             queryLatestRecordForSinglePlayer(
                 playerId,
                 targetDate,
-                MLB
+                table
             )
         ) { MLBPlayer.parseSQL(it) }
     }
@@ -58,7 +59,7 @@ class MLBPlayerService : PlayerService {
                     playerId,
                     from,
                     until,
-                    MLB
+                    table
                 )
             ) { MLBPlayerStats.parseStatHistory(it) }
         }
@@ -68,7 +69,7 @@ class MLBPlayerService : PlayerService {
     }
 
     override suspend fun getLatestPlayerStats(): List<MLBPlayer> = newSuspendedTransaction {
-        executeQueryOfPlayers(queryStatsForSinglePlayer(MLB)) { MLBPlayer.parseSQL(it) }
+        executeQueryOfPlayers(queryStatsForSinglePlayer(table)) { MLBPlayer.parseSQL(it) }
     }
 
     override suspend fun getStatsFeed(): Flow<List<MLBPlayer>> = flow {

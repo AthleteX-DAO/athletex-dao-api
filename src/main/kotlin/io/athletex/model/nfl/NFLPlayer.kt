@@ -7,8 +7,8 @@ import java.sql.ResultSet
 
 @Serializable
 data class NFLPlayer(
-    val name: String,
-    val id: Int,
+    override val name: String,
+    override val id: Int,
     val team: String,
     val position: String,
     val passingYards: Double,
@@ -19,8 +19,8 @@ data class NFLPlayer(
     val rushingYards: Double,
     val OffensiveSnapsPlayed: Double,
     val DefensiveSnapsPlayed: Double,
-    val price: Double,
-    val timestamp: String,
+    override val price: Double,
+    override val timestamp: String,
 ): Player() {
     companion object {
         fun parseSQL(row: ResultSet): NFLPlayer {

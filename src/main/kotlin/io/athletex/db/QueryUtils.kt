@@ -48,7 +48,7 @@ fun queryLatestRecordForSinglePlayer(playerId: Int, targetDate: String? = null, 
     "SELECT * FROM ${table.tableName} " +
             "LATEST BY name " +
             "WHERE id = '$playerId' " +
-            if(targetDate != null) addTimestampBound(targetDate) else "" +
+            if (targetDate != null) addTimestampBound(targetDate) else "" +
                     "ORDER by name"
 
 fun queryRecordHistoryForSinglePlayer(playerId: Int, from: String?, until: String?, table: Table) =
@@ -56,6 +56,21 @@ fun queryRecordHistoryForSinglePlayer(playerId: Int, from: String?, until: Strin
             "WHERE id = '$playerId' " +
             addTimeFilter(from, until) +
             "ORDER by timestamp DESC "
+
+fun queryPriceHistoryForSinglePlayer(
+    playerId: Int,
+    from: String?,
+    until: String?,
+    table: Table,
+    interval: String
+) = "WITH history_range " +
+        "AS(SELECT * FROM ${table.tableName} " +
+        "WHERE id = '$playerId' " +
+        addTimeFilter(from, until) + "), " +
+        "avg_book_price " +
+        "AS(SELECT id, name, avg(price) price, timestamp FROM history_range SAMPLE BY $interval) " +
+        "SELECT * from avg_book_price " +
+        "ORDER by timestamp DESC "
 
 private fun addTimeFilter(fromDate: String?, untilDate: String?): String =
     when {

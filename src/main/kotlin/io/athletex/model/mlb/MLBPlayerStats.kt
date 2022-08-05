@@ -3,7 +3,6 @@ package io.athletex.model.mlb
 import io.athletex.model.PlayerStats
 import kotlinx.serialization.Serializable
 import java.sql.ResultSet
-import java.sql.Timestamp
 
 @Serializable
 data class MLBPlayerStats (
@@ -49,7 +48,7 @@ data class MLBPlayerStats (
                         plateAppearances = row.getDouble(MLBPlayer::plateAppearances.name),
                         weightedOnBasePercentage = row.getDouble(MLBPlayer::weightedOnBasePercentage.name),
                         price = row.getDouble(MLBPlayer::price.name),
-                        timestamp = row.getString(MLBPlayer::timeStamp.name)
+                        timestamp = row.getString(MLBPlayer::timestamp.name)
                     )
                 )
             }

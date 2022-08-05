@@ -3,13 +3,13 @@ package io.athletex.routes
 import io.athletex.model.Player
 import io.athletex.routes.payloads.PlayerIds
 import io.athletex.services.PlayerService
-import io.ktor.server.application.*
 import io.ktor.http.*
-import io.ktor.websocket.*
+import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
+import io.ktor.websocket.*
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 
 internal fun Route.getPlayersByFilters(playerService: PlayerService) {
@@ -75,6 +75,25 @@ internal fun Route.getPlayerHistory(playerService: PlayerService) {
             val until: String? = call.request.queryParameters["until"]
             val playerId: Int = call.parameters["id"]!!.toInt()
             call.respond(HttpStatusCode.OK, playerService.getPlayerHistory(playerId, from, until))
+        } catch (e: NullPointerException) {
+            call.respond(HttpStatusCode.NotFound, "Player by this id is not found")
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
+        }
+    }
+}
+
+internal fun Route.getPlayerPriceHistory(playerService: PlayerService) {
+    get("/players/{id}/history/price") {
+        try {
+            val from: String? = call.request.queryParameters["from"]
+            val until: String? = call.request.queryParameters["until"]
+            val interval: String? = call.request.queryParameters["interval"]
+            val playerId: Int = call.parameters["id"]!!.toInt()
+            call.respond(
+                HttpStatusCode.OK,
+                playerService.getPlayerPriceHistory(playerId, from, until, (interval ?: "2h"))
+            )
         } catch (e: NullPointerException) {
             call.respond(HttpStatusCode.NotFound, "Player by this id is not found")
         } catch (e: Exception) {
