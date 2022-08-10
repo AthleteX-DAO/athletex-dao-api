@@ -14,7 +14,7 @@ ingress:
     alb.ingress.kubernetes.io/healthcheck-path: /
     alb.ingress.kubernetes.io/group.name: athletex-external
   hosts:
-    - host: api-new.athletex.io
+    - host: api-stage.athletex.io
       paths:
         - '/'
 
