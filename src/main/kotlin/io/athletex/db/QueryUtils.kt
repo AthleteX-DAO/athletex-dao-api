@@ -67,9 +67,9 @@ fun queryPriceHistoryForSinglePlayer(
         "AS(SELECT * FROM ${table.tableName} " +
         "WHERE id = '$playerId' " +
         addTimeFilter(from, until) + "), " +
-        "avg_book_price " +
-        "AS(SELECT id, name, avg(price) price, timestamp FROM history_range SAMPLE BY $interval) " +
-        "SELECT * from avg_book_price " +
+        "last_book_price " +
+        "AS(SELECT id, name, last(price) price, timestamp FROM history_range SAMPLE BY $interval) " +
+        "SELECT * from last_book_price " +
         "ORDER by timestamp DESC "
 
 private fun addTimeFilter(fromDate: String?, untilDate: String?): String =
