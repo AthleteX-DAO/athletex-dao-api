@@ -12,7 +12,7 @@ ingress:
     alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-path: /mlb/players
-    alb.ingress.kubernetes.io/group.name: athletex-external
+    alb.ingress.kubernetes.io/group.name: athletex-api
   hosts:
     - host: api-stage.athletex.io
       paths:
