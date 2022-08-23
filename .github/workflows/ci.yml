@@ -113,7 +113,7 @@ jobs:
         run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
       - name: List existing configuration
-        run: helm list -n test
+        run: helm list -n stage
 
       - name: Helmfile Diff
         run: |
@@ -186,7 +186,7 @@ jobs:
         run: aws eks update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
       - name: List existing configuration
-        run: helm list -n test
+        run: helm list -n prod
 
       - name: Helmfile Diff
         run: |

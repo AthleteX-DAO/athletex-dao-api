@@ -15,7 +15,7 @@ releases:
   values:
     - ./service-chart/{{ .Environment.Name }}-service.yaml
   secrets:
-    - ./service-chart/{{ .Environment.Name }}stage.secrets.yaml
+    - ./service-chart/{{ .Environment.Name }}.secrets.yaml
   set:
     - name: image.repository
       value: {{ requiredEnv "ECR_REPOSITORY_BASE_URL" }}/athletex-api
