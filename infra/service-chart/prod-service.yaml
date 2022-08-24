@@ -1,0 +1,34 @@
+environment_name: prod
+
+nodeSelector:
+  environment: prod
+  node: stateless
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:510626941593:certificate/b884a58f-0406-46f8-86f8-02961a4be9e1
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-path: /mlb/players
+    alb.ingress.kubernetes.io/group.name: athletex-api-prod
+  hosts:
+    - host: api.athletex.io
+      paths:
+        - '/'
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1.5Gi
+  requests:
+    cpu: 500m
+    memory: 0.5Gi
+
+env:
+  DB_URL: 'jdbc:postgresql://ax-db-questdb:8812/qdb'
