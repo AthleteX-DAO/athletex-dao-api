@@ -1,5 +1,6 @@
 package io.athletex.services
 
+import io.athletex.client.apis.stats.syncNflStatsToDb
 import io.athletex.db.*
 import io.athletex.db.Table.NFL
 import io.athletex.model.PlayerStats
@@ -85,5 +86,9 @@ class NFLPlayerService : PlayerService {
             emit(getPlayerById(id))
             delay(10000)
         }
+    }
+
+    override suspend fun updateDatabase() {
+        syncNflStatsToDb()
     }
 }

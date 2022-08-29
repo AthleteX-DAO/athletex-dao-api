@@ -1,0 +1,88 @@
+package io.athletex.client.apis.stats
+
+import io.athletex.client.Client
+import io.athletex.client.formulas.mlb.mlbPositionalAdjustments
+import io.athletex.services.MLBPlayerService
+import io.ktor.client.*
+import io.ktor.client.engine.mock.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.config.*
+import io.ktor.utils.io.*
+import io.mockk.*
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import org.junit.Before
+import org.junit.Test
+import kotlin.test.assertTrue
+
+
+@OptIn(ExperimentalSerializationApi::class)
+internal class StatsApiTest {
+
+    private val appConfiguration: HoconApplicationConfig = mockk()
+    private val mockMlbService: MLBPlayerService = mockk()
+    private val mlbPlayerResponse = this::class.java.classLoader
+        .getResource("mlb_player_response.json")?.readText()
+
+    @Before
+    fun setUp() {
+        mockkObject(Client)
+        val configValue: ApplicationConfigValue = mockk {
+            every { getString() } returns "MLB_API_KEY"
+        }
+        every { appConfiguration.property(any()) } returns configValue
+        val mockEngine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/v3/mlb/stats/json/PlayerSeasonStats/2022" -> {
+                    respond(
+                        content = ByteReadChannel("""$mlbPlayerResponse"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+                else -> {
+                    respond(
+                        content = ByteReadChannel("""{}"""),
+                        status = HttpStatusCode.NotFound,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+
+            }
+
+        }
+        val apiClient = HttpClient(mockEngine) {
+            install(ContentNegotiation) {
+                json(Json {
+                    ignoreUnknownKeys = true
+                    isLenient = true
+                    explicitNulls = false
+                })
+            }
+
+        }
+        every { Client.httpClient } returns apiClient
+        every { mockMlbService.insertPlayers(any()) } just Runs
+    }
+
+    @Test
+    fun `when request returns successfully, then insert stats into database`(): Unit = runBlocking {
+        syncMlbStatsToDb(mockMlbService, appConfiguration)
+        verify {
+            mockMlbService.insertPlayers(withArg {
+                assertTrue { it.isNotEmpty() }
+                it.forEach { item ->
+                    assertTrue { !item.price.isNaN() }
+                    if (mlbPositionalAdjustments.containsKey(item.position)) {
+                        assertTrue { item.price >= 0 }
+                    }
+                }
+            })
+        }
+
+    }
+
+}
