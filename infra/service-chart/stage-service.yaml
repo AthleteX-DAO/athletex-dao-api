@@ -31,4 +31,5 @@ resources:
     memory: 0.5Gi
 
 env:
-  DB_URL: 'jdbc:postgresql://ax-db-questdb:8812/qdb'
+  DB_URL: 'ax-db-questdb'
+  DB_POSTGRES: 'jdbc:postgresql://ax-db-questdb:8812/qdb'
