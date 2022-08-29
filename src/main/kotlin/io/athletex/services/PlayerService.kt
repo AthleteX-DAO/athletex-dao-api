@@ -26,6 +26,7 @@ interface PlayerService {
     suspend fun getPlayersHistories(playerIds: PlayerIds, from: String?, until: String?): List<PlayerStats>
     suspend fun getStatsFeed(): Flow<List<Player>>
     suspend fun getStatsFeedByPlayer(id: Int): Flow<Player>
+    suspend fun updateDatabase();
 
     suspend fun getPlayerPriceHistory(
         playerId: Int,

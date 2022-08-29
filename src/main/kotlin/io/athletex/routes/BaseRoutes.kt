@@ -119,6 +119,17 @@ internal fun Route.getPlayersHistories(playerService: PlayerService) {
     }
 }
 
+internal fun Route.updateDB(playerService: PlayerService) {
+    get("/players/update") {
+        try {
+            playerService.updateDatabase()
+            call.respond(HttpStatusCode.OK, "DB updated")
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
+        }
+    }
+}
+
 internal fun Route.getStatsFeedForPlayerById(
     playerService: PlayerService,
     encodePlayerToString: (Player) -> String
