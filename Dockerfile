@@ -1,6 +1,6 @@
-FROM openjdk:12-jdk-alpine
+#FROM openjdk:12-jdk-alpine
+FROM openjdk:20-ea-12-jdk-buster
 
-RUN apk add --no-cache bash
 COPY . /athletex-dao-api
 WORKDIR /athletex-dao-api
 
