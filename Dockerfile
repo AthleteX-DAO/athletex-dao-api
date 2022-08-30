@@ -1,5 +1,5 @@
 #FROM openjdk:12-jdk-alpine
-FROM openjdk:20-ea-12-jdk-buster
+FROM openjdk:19-jdk-bullseye
 
 COPY . /athletex-dao-api
 WORKDIR /athletex-dao-api
