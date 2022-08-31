@@ -16,6 +16,7 @@ class PlayerPriceHistory(
             var priceHistory: PlayerPriceHistory? = null
 
             while (row.next()) {
+                if(wasRecordedDuringBadEntryTime(row.getString(Player::timestamp.name))) break
                 if (row.isFirst) {
                     priceHistory = PlayerPriceHistory(
                         name = row.getString(Player::name.name),

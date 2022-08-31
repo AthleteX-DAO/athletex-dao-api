@@ -12,14 +12,12 @@ import io.ktor.server.config.*
 import io.ktor.utils.io.*
 import io.mockk.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertTrue
 
 
-@OptIn(ExperimentalSerializationApi::class)
 internal class StatsApiTest {
 
     private val appConfiguration: HoconApplicationConfig = mockk()

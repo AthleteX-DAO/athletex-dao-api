@@ -6,6 +6,7 @@ import io.athletex.model.Player
 import io.athletex.model.PlayerPriceHistory
 import io.athletex.model.PlayerPriceHistory.Companion.parsePriceHistory
 import io.athletex.model.PlayerStats
+import io.athletex.model.wasRecordedDuringBadEntryTime
 import io.athletex.routes.payloads.PlayerIds
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.exposed.sql.statements.StatementType
@@ -53,8 +54,11 @@ interface PlayerService {
             .exec(
                 queryStatement
             ) { resultSet ->
-                while (resultSet.next())
-                    players.add(parseSql(resultSet))
+                while (resultSet.next()) {
+                    if (!wasRecordedDuringBadEntryTime(resultSet.getString(Player::timestamp.name))) {
+                        players.add(parseSql(resultSet))
+                    }
+                }
             }
         return players
     }

@@ -1,6 +1,8 @@
 package io.athletex.model.mlb
 
+import io.athletex.model.Player
 import io.athletex.model.PlayerStats
+import io.athletex.model.wasRecordedDuringBadEntryTime
 import kotlinx.serialization.Serializable
 import java.sql.ResultSet
 
@@ -19,6 +21,7 @@ data class MLBPlayerStats (
             var mlbPlayerStats: MLBPlayerStats? = null
 
             while (row.next()) {
+                if(wasRecordedDuringBadEntryTime(row.getString(Player::timestamp.name))) break
                 if (row.isFirst) {
                     mlbPlayerStats = MLBPlayerStats(
                         name = row.getString(MLBPlayer::name.name),
