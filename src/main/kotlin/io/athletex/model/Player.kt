@@ -13,9 +13,10 @@ abstract class Player {
 }
 
 fun wasRecordedDuringBadEntryTime(timestamp: String): Boolean {
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
-    val fromTime = LocalDateTime.parse("2022-08-29 07:10:00.000000", formatter)
-    val untilTime = LocalDateTime.parse("2022-08-29 07:20:00.000000", formatter)
-    val timeRecorded = LocalDateTime.parse(timestamp, formatter)
+    val targetTimestamp = timestamp.substringBefore(".")
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    val fromTime = LocalDateTime.parse("2022-08-29 07:10:00", formatter)
+    val untilTime = LocalDateTime.parse("2022-08-29 07:20:00", formatter)
+    val timeRecorded = LocalDateTime.parse(targetTimestamp, formatter)
     return timeRecorded.isAfter(fromTime) && timeRecorded.isBefore(untilTime)
 }

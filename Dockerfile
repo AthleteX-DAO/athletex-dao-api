@@ -1,4 +1,5 @@
 FROM openjdk:19-jdk-bullseye AS build
+RUN useradd -ms /bin/bash gradle
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN apt-get update
