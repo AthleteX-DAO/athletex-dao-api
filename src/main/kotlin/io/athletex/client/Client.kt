@@ -13,14 +13,12 @@ import kotlinx.serialization.json.Json
 
 object Client {
 
-    @OptIn(ExperimentalSerializationApi::class)
     val httpClient =  HttpClient(CIO) {
 
         install(ContentNegotiation){
             json(Json {
                 ignoreUnknownKeys = true
                 isLenient = true
-                explicitNulls = false
             })
         }
 
@@ -30,7 +28,7 @@ object Client {
                     println("Network Message log: $message")
                 }
             }
-            level = LogLevel.ALL
+            level = LogLevel.HEADERS
         }
         install(HttpTimeout){
             socketTimeoutMillis = 30_000

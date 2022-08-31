@@ -11,9 +11,11 @@ services:
     expose:
       - 8080
     environment:
+      - DB_POSTGRES=${DB_POSTGRES}
       - DB_URL=${DB_URL}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
+      - MLB_API_KEY=${MLB_API_KEY}
     deploy:
       restart_policy:
         condition: on-failure
