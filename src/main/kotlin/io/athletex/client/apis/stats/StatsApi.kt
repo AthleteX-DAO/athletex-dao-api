@@ -6,6 +6,8 @@ import io.athletex.client.Client.httpClient
 import io.athletex.client.formulas.mlb.computePrice
 import io.athletex.model.mlb.MLBPlayer
 import io.athletex.services.MLBPlayerService
+import io.athletex.model.nfl.NFLPlayer
+import io.athletex.services.NFLPlayerService
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -23,42 +25,84 @@ suspend fun syncStatsToDb(sports: Sports) {
 }
 
 suspend fun syncNflStatsToDb() {
+    val nflApiKey = config.property("api.nflApiKey").getString()
 
+    val response = httpClient.request(NFL_STATS_ENDPOINT) {
+        method = HttpMethod.Get
+        headers.append("Ocp-Apim-Subscription-Key", nflApiKey)
+    }
+    val playerStatsResponse = response.body<List<NFLPlayer>>()
+    println("NFL stats response size = ${playerStatsResponse.size}")
+
+    val statsUpdate = playerStatsResponse.map { player ->
+        val name = player.name.removeNonSpacingMarks().replace(" ", "\'")
+        val computedPrice = computeNFLPrice(player)
+        
+        player.copy(
+            name = name,
+            price = computedPrice
+        )
+    } //TODO filter out non supported players
+    nflPlayerService.insertStatsUpdate(statsUpdate)
 }
 
-suspend fun syncMlbStatsToDb(config: HoconApplicationConfig, mlbPlayerService: MLBPlayerService) {
+suspend fun syncMlbStatsToDb(mlbPlayerService: MLBPlayerService, config: HoconApplicationConfig = appConfig) {
     val mlbApiKey = config.property("api.mlbApiKey").getString()
-
     val response = httpClient.request(MLB_STATS_ENDPOINT) {
         method = HttpMethod.Get
         headers.append("Ocp-Apim-Subscription-Key", mlbApiKey)
     }
-    val playerStatsResponse = response.body<List<MLBPlayer>>()
+    val playerStatsResponse = response.body<List<BaseballFeedUpdateItem>>()
+    val statsUpdate = parseMLBStatsUpdateResponse(playerStatsResponse)
+    mlbPlayerService.insertPlayers(statsUpdate)
+}
+
+private fun parseMLBStatsUpdateResponse(playerStatsResponse: List<BaseballFeedUpdateItem>): List<BaseballPlayerInsertItem> {
     println("MLB stats response size = ${playerStatsResponse.size}")
 
     var lgWeightOnBase = 0.0
-    var sumLeaguePlateAppearances = 0
-    playerStatsResponse.filterNot { it.plateAppearances > 0 }.forEach {
+    var sumLeaguePlateAppearances = 0.0
+    playerStatsResponse.filter { it.plateAppearances > 0 }.forEach {
         lgWeightOnBase += it.weightedOnBasePercentage
         sumLeaguePlateAppearances += it.plateAppearances
     }
     lgWeightOnBase /= playerStatsResponse.size
-    println("lgWeighOnBase=$lgWeightOnBase")
-    println("sumLeaguePlateAppearances=$sumLeaguePlateAppearances")
 
-    val statsUpdate = playerStatsResponse.map { player ->
-        val name = player.name.removeNonSpacingMarks().replace(" ", "\'")
-        val inningsPlayed = player.games * 9.0
-        val computedPrice = computeMLBPrice(player, lgWeightOnBase, sumLeaguePlateAppearances)
-        // what is this copy doing?
-        player.copy(
+    val statsUpdate = playerStatsResponse.map { playerUpdate ->
+        val name = playerUpdate.name.removeNonSpacingMarks()
+        val inningsPlayed = playerUpdate.games * 9.0
+        val computedPrice = computeMLBPrice(playerUpdate, lgWeightOnBase, sumLeaguePlateAppearances)
+        BaseballPlayerInsertItem(
+            id = playerUpdate.playerID,
             name = name,
+            team = playerUpdate.team,
+            position = playerUpdate.position,
+            started = playerUpdate.started,
+            games = playerUpdate.games,
+            atBats = playerUpdate.atBats,
+            runs = playerUpdate.runs,
+            singles = playerUpdate.singles,
+            doubles = playerUpdate.doubles,
+            triples = playerUpdate.triples,
+            homeRuns = playerUpdate.homeRuns,
             inningsPlayed = inningsPlayed,
+            battingAverage = playerUpdate.battingAverage,
+            outs = playerUpdate.outs,
+            walks = playerUpdate.walks,
+            errors = playerUpdate.errors,
+            saves = playerUpdate.saves,
+            strikeOuts = playerUpdate.strikeouts,
+            stolenBases = playerUpdate.stolenBases,
+            plateAppearances = playerUpdate.plateAppearances,
+            weightedOnBasePercentage = playerUpdate.weightedOnBasePercentage.toDouble(),
             price = computedPrice
         )
-    } //TODO filter out non supported players
-    mlbPlayerService.insertStatsUpdate(statsUpdate)
-}
+    }
+    statsUpdate::class.memberProperties.forEach {
+        println("${it::name} = $it")
+    }
+    return statsUpdate
+}  
 
 fun computeMLBPrice(athlete: MLBPlayer, lgWeightOnBase: Double, sumPlateAppearances: Int): Double {
     // map position weights
@@ -96,7 +140,7 @@ fun computeMLBPrice(athlete: MLBPlayer, lgWeightOnBase: Double, sumPlateAppearan
     return computedMajorLeagueBaseballPrice
 }
 
-fun computeNFLPrice(athlete: Player): Double {
+fun computeNFLPrice(athlete: NFLPlayer): Double {
     
     // Variables
     val passingYards = athlete.passingYards / 25
@@ -126,3 +170,4 @@ fun computeNFLPrice(athlete: Player): Double {
 
     return computedAmericanFootballPrice
 }
+

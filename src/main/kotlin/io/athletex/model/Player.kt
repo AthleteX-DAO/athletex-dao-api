@@ -1,28 +1,22 @@
 package io.athletex.model
 
-import io.athletex.model.Player
 import kotlinx.serialization.Serializable
-import java.sql.ResultSet
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Serializable
 abstract class Player {
-    override val id: Int,
-    override val name: String,
-    val team: String,
-    val position: String,
-    
-    val passingYards: Double,
-    val rushingYards: Double,
-    val receivingYards: Double,
-    val rushingTouchdowns: Double,
-    val receivingTouchdowns: Double,
-    val passingTouchdowns: Double,
-    val receptions: Double,
-    val passingInterceptions: Double,
-    val fumblesLost: Double,
-    val offensiveSnapsPlayed: Double,
-    val defensiveSnapsPlayed: Double,
+    abstract val id: Int
+    abstract val name: String
+    abstract val price: Double
+    abstract val timestamp: String
+}
 
-    override val price: Double,
-    override val timestamp: String,
+fun wasRecordedDuringBadEntryTime(timestamp: String): Boolean {
+    val targetTimestamp = timestamp.substringBefore(".")
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    val fromTime = LocalDateTime.parse("2022-08-29 07:10:00", formatter)
+    val untilTime = LocalDateTime.parse("2022-08-29 07:20:00", formatter)
+    val timeRecorded = LocalDateTime.parse(targetTimestamp, formatter)
+    return timeRecorded.isAfter(fromTime) && timeRecorded.isBefore(untilTime)
 }
