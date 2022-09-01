@@ -91,4 +91,33 @@ class NFLPlayerService : PlayerService {
     override suspend fun updateDatabase() {
         syncNflStatsToDb()
     }
+
+    fun insertPlayers(players: List<FootballPlayerInsertItem>) {
+        val qdbHost = appConfig.property("db.url").getString()
+        val sender = Sender.builder().address("$qdbHost:9009").build()
+        println("Inserting ${players.size} players")
+        println("Sample: ${players.first()}")
+        players.forEach {
+            sender.table("nfl")
+                .symbol(it::name.name, it.name)
+                .symbol(it::id.name, it.id.toString())
+                .symbol(it::team.name, it.team)
+                .symbol(it::position.name, it.position)
+                .doubleColumn(it::passingYards.name, it.passingYards)
+                .doubleColumn(it::passingTouchDowns.name, it.passingTouchDowns)
+                .doubleColumn(it::reception.name, it.reception)
+                .doubleColumn(it::receiveYards.name, it.receiveYards)
+                .doubleColumn(it::receiveTouch.name, it.receiveTouch)
+                .doubleColumn(it::rushingYards.name, it.rushingYards)
+                .doubleColumn(it::OffensiveSnapsPlayed.name, it.OffensiveSnapsPlayed)
+                .doubleColumn(it::DefensiveSnapsPlayed.name, it.DefensiveSnapsPlayed)
+                .doubleColumn(it::price.name, it.price)
+                .atNow()
+        }
+        try {
+        } catch (e: Exception) {
+            println("Error connecting to qdb")
+            e.printStackTrace()
+        }
+    }
 }
