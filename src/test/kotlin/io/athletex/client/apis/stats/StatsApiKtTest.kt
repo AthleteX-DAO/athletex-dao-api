@@ -30,6 +30,9 @@ internal class StatsApiTest {
     private val nflPlayerResponse = this::class.java.classLoader
         .getResource("nfl_player_response.json")?.readText()
 
+
+    // MLB Test
+
     @Before
     fun setUp() {
         mockkObject(Client)
@@ -88,10 +91,9 @@ internal class StatsApiTest {
 
     }
 
-//------------------
-    
+    // NFL Test
 	@Before
-    fun setUp2() {
+    fun setUpNLF() {
         mockkObject(Client)
         val configValue: ApplicationConfigValue = mockk {
             every { getString() } returns "NFL_API_KEY"
@@ -132,13 +134,14 @@ internal class StatsApiTest {
     }
 
     @Test
-    fun `when request returns successfully, then insert stats into database 2`(): Unit = runBlocking {
+    fun `when request returns successfully, then insert stats into database NFL`(): Unit = runBlocking {
         syncNflStatsToDb(mockNflService, appConfiguration)
         verify {
             mockNflService.insertPlayers(withArg {
                 assertTrue { it.isNotEmpty() }
                 it.forEach { item ->
                     assertTrue { !item.price.isNaN() }
+                    assertTrue { item.price >= 0 }
                 }
             })
         }
