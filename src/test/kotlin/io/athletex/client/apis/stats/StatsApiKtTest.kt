@@ -1,8 +1,7 @@
 package io.athletex.client.apis.stats
 
 import io.athletex.client.Client
-import io.athletex.client.formulas.mlb.mlbPositionalAdjustments
-import io.athletex.client.formulas.nfl.nflPositionalAdjustments
+import io.athletex.client.formulas.mlbPositionalAdjustments
 import io.athletex.services.MLBPlayerService
 import io.athletex.services.MLBPlayerService
 import io.ktor.client.*
@@ -89,8 +88,8 @@ internal class StatsApiTest {
 
     }
 
-
-    /*
+//------------------
+    
 	@Before
     fun setUp2() {
         mockkObject(Client)
@@ -140,14 +139,10 @@ internal class StatsApiTest {
                 assertTrue { it.isNotEmpty() }
                 it.forEach { item ->
                     assertTrue { !item.price.isNaN() }
-                    if (nflPositionalAdjustments.containsKey(item.position)) {
-                        assertTrue { item.price >= 0 }
-                    }
                 }
             })
         }
 
     }
 
-    */
 }

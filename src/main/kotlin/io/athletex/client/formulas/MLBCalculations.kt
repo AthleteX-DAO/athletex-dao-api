@@ -15,7 +15,7 @@ val mlbPositionalAdjustments = mapOf(
     "DH" to -17.5,
 )
 
-fun computePrice(
+fun computeMLBPrice(
     feedUpdateItem: BaseballFeedUpdateItem,
     lgWeightOnBase: Double,
     sumLeaguePlateAppearances: Double
