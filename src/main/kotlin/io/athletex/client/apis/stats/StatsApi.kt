@@ -7,8 +7,8 @@ import io.athletex.client.apis.stats.models.BaseballFeedUpdateItem
 import io.athletex.client.apis.stats.models.BaseballPlayerInsertItem
 import io.athletex.client.apis.stats.models.FootballFeedUpdateItem
 import io.athletex.client.apis.stats.models.FootballPlayerInsertItem
-import io.athletex.client.formulas.calculateMLBPrice
-import io.athletex.client.formulas.calculateNFLPrice
+import io.athletex.client.formulas.computeNFLPrice
+import io.athletex.client.formulas.computeMLBPrice
 import io.athletex.services.MLBPlayerService
 import io.athletex.services.NFLPlayerService
 import io.ktor.client.call.*
@@ -19,7 +19,7 @@ import removeNonSpacingMarks
 import kotlin.reflect.full.memberProperties
 
 const val MLB_STATS_ENDPOINT = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerSeasonStats/2022"
-const val NFL_STATS_ENDPOINT = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerSeasonStats/2022"
+const val NFL_STATS_ENDPOINT = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsByWeek/2022PRE/3"
 
 suspend fun syncStatsToDb(sports: Sports) {
     when (sports) {
@@ -39,7 +39,7 @@ suspend fun syncNFLStatsToDb(nflPlayerService: NFLPlayerService, config: HoconAp
     nflPlayerService.insertPlayers(statsUpdate)
 }
 
-private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUpdateItem>): List<FootballFeedUpdateItem> {
+private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUpdateItem>): List<FootballPlayerInsertItem> {
     println("NFL stats response size = ${playerStatsResponse.size}")
 
     val statsUpdate = playerStatsResponse.map { playerUpdate ->
@@ -47,17 +47,17 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
         val computedPrice = computeNFLPrice(playerUpdate)
         FootballPlayerInsertItem(
             name = name,
-            id = playerUpdate.id
+            id = playerUpdate.playerId,
             team = playerUpdate.team,
             position = playerUpdate.position,
             passingYards = playerUpdate.passingYards,
-            passingTouchDowns = playerUpdate.passingTouchDowns,
-            reception = playerUpdate.reception,
-            receiveYards = playerUpdate.receiveYards,
-            receiveTouch = playerUpdate.receiveTouch,
+            passingTouchDowns = playerUpdate.passingTouchdowns,
+            reception = playerUpdate.receptions,
+            receiveYards = playerUpdate.receivingYards,
+            receiveTouch = playerUpdate.receivingTouchdowns,
             rushingYards = playerUpdate.rushingYards,
-            OffensiveSnapsPlayed = playerUpdate.OffensiveSnapsPlayed,
-            DefensiveSnapsPlayed = playerUpdate.DefensiveSnapsPlayed,
+            OffensiveSnapsPlayed = playerUpdate.offensiveSnapsPlayed,
+            DefensiveSnapsPlayed = playerUpdate.defensiveSnapsPlayed,
             price = computedPrice
         )
     }

@@ -1,6 +1,8 @@
 package io.athletex.services
 
-import io.athletex.client.apis.stats.syncNflStatsToDb
+import io.athletex.appConfig
+import io.athletex.client.apis.stats.syncNFLStatsToDb
+import io.athletex.client.apis.stats.models.FootballPlayerInsertItem
 import io.athletex.db.*
 import io.athletex.db.Table.NFL
 import io.athletex.model.PlayerStats
@@ -8,6 +10,7 @@ import io.athletex.model.nfl.NFLPlayer
 import io.athletex.model.nfl.NFLPlayerStats
 import io.athletex.routes.payloads.PlayerIds
 import kotlinx.coroutines.currentCoroutineContext
+import io.questdb.client.Sender
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -89,7 +92,7 @@ class NFLPlayerService : PlayerService {
     }
 
     override suspend fun updateDatabase() {
-        syncNflStatsToDb()
+        syncNFLStatsToDb(this)
     }
 
     fun insertPlayers(players: List<FootballPlayerInsertItem>) {

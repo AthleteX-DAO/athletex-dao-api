@@ -1,4 +1,4 @@
-package io.athletex.client.formulas.mlb
+package io.athletex.client.formulas
 
 import io.athletex.client.apis.stats.models.BaseballFeedUpdateItem
 

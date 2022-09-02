@@ -2,7 +2,7 @@ package io.athletex.client.apis.stats.models
 
 data class FootballPlayerInsertItem(
     val name: String,
-    val id: Int,
+    val id: Double,
     val team: String,
     val position: String,
     val passingYards: Double,

@@ -2,7 +2,7 @@ package io.athletex.services
 
 import io.athletex.appConfig
 import io.athletex.client.apis.stats.models.BaseballPlayerInsertItem
-import io.athletex.client.apis.stats.syncMlbStatsToDb
+import io.athletex.client.apis.stats.syncMLBStatsToDb
 import io.athletex.db.*
 import io.athletex.db.Table.MLB
 import io.athletex.model.mlb.MLBPlayer
@@ -91,7 +91,7 @@ class MLBPlayerService : PlayerService {
     }
 
     override suspend fun updateDatabase() {
-        syncMlbStatsToDb(this)
+        syncMLBStatsToDb(this)
     }
 
     fun insertPlayers(players: List<BaseballPlayerInsertItem>) {

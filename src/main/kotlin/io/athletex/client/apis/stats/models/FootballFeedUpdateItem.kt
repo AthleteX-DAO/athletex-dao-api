@@ -267,5 +267,4 @@ data class FootballFeedUpdateItem(
     val teamID: Double,
     @SerialName("GlobalTeamID")
     val globalTeamID: Double,
-    @SerialName("FantasyPointsFantasyDraft")
 )

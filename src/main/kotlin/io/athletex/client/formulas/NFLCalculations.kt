@@ -1,25 +1,25 @@
-package io.athletex.client.formulas.mlb
+package io.athletex.client.formulas
 
-import io.athletex.client.apis.stats.models.BaseballFeedUpdateItem
+import io.athletex.client.apis.stats.models.FootballFeedUpdateItem
 
-fun computeNFLPrice(athlete: NFLPlayer): Double {
+fun computeNFLPrice(feedUpdateItem: FootballFeedUpdateItem): Double {
     
     // Variables
-    val passingYards = athlete.passingYards / 25
-    val rushingYards = athlete.rushingYards / 10
-    val receivingYards = athlete.receivingYards / 10
-    val rushingTouchdowns = athlete.rushingTouchdowns * 6
-    val receivingTouchdowns = athlete.receivingTouchdowns * 6
-    val passTD = athlete.passingTouchdowns * 4
-    val reception = athlete.receptions * 0.5
-    val passingIntercept = athlete.passingInterceptions * -2
-    val fumblesLost = athlete.fumblesLost * -2
+    val passingYards = feedUpdateItem.passingYards / 25
+    val rushingYards = feedUpdateItem.rushingYards / 10
+    val receivingYards = feedUpdateItem.receivingYards / 10
+    val rushingTouchdowns = feedUpdateItem.rushingTouchdowns * 6
+    val receivingTouchdowns = feedUpdateItem.receivingTouchdowns * 6
+    val passTD = feedUpdateItem.passingTouchdowns * 4
+    val reception = feedUpdateItem.receptions * 0.5
+    val passingIntercept = feedUpdateItem.passingInterceptions * -2
+    val fumblesLost = feedUpdateItem.fumblesLost * -2
 
     // Football Athletes
     var numerator = passingYards + rushingYards + receivingYards + rushingTouchdowns + receivingTouchdowns + passTD + reception + passingIntercept + fumblesLost
-    var denominator = athlete.offensiveSnapsPlayed
+    var denominator = feedUpdateItem.offensiveSnapsPlayed
     if (denominator == 0.0) {
-        denominator = athlete.defensiveSnapsPlayed
+        denominator = feedUpdateItem.defensiveSnapsPlayed
     }
     if (denominator == 0.0) {
         denominator = 1.0
