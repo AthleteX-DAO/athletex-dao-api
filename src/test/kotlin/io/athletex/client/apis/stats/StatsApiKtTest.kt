@@ -25,7 +25,7 @@ internal class StatsApiTest {
     private val mockMlbService: MLBPlayerService = mockk()
     private val mlbPlayerResponse = this::class.java.classLoader
         .getResource("mlb_player_response.json")?.readText()
-        
+
     private val mockNflService: NFLPlayerService = mockk()
     private val nflPlayerResponse = this::class.java.classLoader
         .getResource("nfl_player_response.json")?.readText()
@@ -49,7 +49,7 @@ internal class StatsApiTest {
                         headers = headersOf(HttpHeaders.ContentType, "application/json")
                     )
                 }
-                "/v3/nfl/stats/json/PlayerSeasonStats/2022" -> {
+                "/v3/nfl/stats/json/PlayerGameStatsByWeek/2022PRE/3" -> {
                     respond(
                         content = ByteReadChannel("""$nflPlayerResponse"""),
                         status = HttpStatusCode.OK,
@@ -89,9 +89,9 @@ internal class StatsApiTest {
             mockMlbService.insertPlayers(withArg {
                 assertTrue { it.isNotEmpty() }
                 it.forEach { item ->
-                    assertTrue { !item.price.isNaN() }
+                    assertTrue { !item.price!!.isNaN() }
                     if (mlbPositionalAdjustments.containsKey(item.position)) {
-                        assertTrue { item.price >= 0 }
+                        assertTrue { (item.price ?: 0.0) >= 0 }
                     }
                 }
             })
@@ -107,22 +107,13 @@ internal class StatsApiTest {
             mockNflService.insertPlayers(withArg {
                 assertTrue { it.isNotEmpty() }
                 it.forEach { item ->
-                    assertTrue { !item.price.isNaN() }
-                    assertTrue { item.price >= 0 }
+                    assertTrue { !item.price!!.isNaN() }
+                    assertTrue { (item.price ?: 0.0) >= 0 }
                 }
             })
         }
 
     }
-
-
-
-
-
-
-
-
-
 
 
 }

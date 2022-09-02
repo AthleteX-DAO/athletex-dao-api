@@ -19,6 +19,7 @@ object Client {
             json(Json {
                 ignoreUnknownKeys = true
                 isLenient = true
+                encodeDefaults = false
             })
         }
 

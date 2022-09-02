@@ -24,14 +24,14 @@ fun computeMLBPrice(
     // Note -- The collateralization multiplier is meant to scale the calculated WAR price, this may be needed in the future, or further down the stack
     // collateralizationMultiplier = 1000
     val battingRuns =
-        (((((feedUpdateItem.plateAppearances) * (feedUpdateItem.weightedOnBasePercentage - lgWeightOnBase)) / 1.25)))
-    val baseRunningRuns = (feedUpdateItem.stolenBases * 0.2)
+        (((((feedUpdateItem.plateAppearances  ?: 0.0) * ((feedUpdateItem.weightedOnBasePercentage ?: 0.0) - lgWeightOnBase)) / 1.25)))
+    val baseRunningRuns = ((feedUpdateItem.stolenBases ?: 0.0) * 0.2)
     val fieldingRuns =
-        (((feedUpdateItem.errors * -10)) / (feedUpdateItem.games * 9)).let { if (it.isNaN()) 0.0 else it }
+        ((((feedUpdateItem.errors  ?: 0.0) * -10)) / ((feedUpdateItem.games ?: 0.0) * 9)).let { if (it.isNaN()) 0.0 else it }
     val positionalAdjustments =
-        (((feedUpdateItem.games * 9) * (mlbPositionalAdjustments[feedUpdateItem.position] ?: 0.0))) / 1458.0
+        ((((feedUpdateItem.games ?: 0.0) * 9) * (mlbPositionalAdjustments[feedUpdateItem.position] ?: 0.0))) / 1458.0
     val replacementRuns =
-        ((feedUpdateItem.plateAppearances * 5561.49) / sumLeaguePlateAppearances).let { if (it.isNaN()) 0.0 else it }
+        (((feedUpdateItem.plateAppearances ?: 0.0) * 5561.49) / sumLeaguePlateAppearances).let { if (it.isNaN()) 0.0 else it }
 
     val statsNumerator = battingRuns + baseRunningRuns + fieldingRuns + positionalAdjustments + replacementRuns
 
