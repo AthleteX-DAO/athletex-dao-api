@@ -20,9 +20,9 @@ object DatabaseFactory {
             jdbcUrl = dbPostgres
             username = dbUser
             password = dbPassword
-            maximumPoolSize = 3
-            isAutoCommit = true
-            transactionIsolation = "TRANSACTION_REPEATABLE_READ"
+            maximumPoolSize = 10
+            isAutoCommit = false
+            transactionIsolation = "TRANSACTION_READ_COMMITTED"
             validate()
         }
         return HikariDataSource(config)
