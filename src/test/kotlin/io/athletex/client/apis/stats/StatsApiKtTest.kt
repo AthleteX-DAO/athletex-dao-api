@@ -2,6 +2,8 @@ package io.athletex.client.apis.stats
 
 import io.athletex.client.Client
 import io.athletex.client.formulas.mlb.mlbPositionalAdjustments
+import io.athletex.client.formulas.nfl.nflPositionalAdjustments
+import io.athletex.services.MLBPlayerService
 import io.athletex.services.MLBPlayerService
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
@@ -24,6 +26,10 @@ internal class StatsApiTest {
     private val mockMlbService: MLBPlayerService = mockk()
     private val mlbPlayerResponse = this::class.java.classLoader
         .getResource("mlb_player_response.json")?.readText()
+        
+    private val mockNflService: NFLPlayerService = mockk()
+    private val nflPlayerResponse = this::class.java.classLoader
+        .getResource("nfl_player_response.json")?.readText()
 
     @Before
     fun setUp() {
@@ -83,4 +89,65 @@ internal class StatsApiTest {
 
     }
 
+
+    /*
+	@Before
+    fun setUp2() {
+        mockkObject(Client)
+        val configValue: ApplicationConfigValue = mockk {
+            every { getString() } returns "NFL_API_KEY"
+        }
+        every { appConfiguration.property(any()) } returns configValue
+        val mockEngine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/v3/nfl/stats/json/PlayerSeasonStats/2022" -> {
+                    respond(
+                        content = ByteReadChannel("""$nflPlayerResponse"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+                else -> {
+                    respond(
+                        content = ByteReadChannel("""{}"""),
+                        status = HttpStatusCode.NotFound,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+
+            }
+
+        }
+        val apiClient = HttpClient(mockEngine) {
+            install(ContentNegotiation) {
+                json(Json {
+                    ignoreUnknownKeys = true
+                    isLenient = true
+                    explicitNulls = false
+                })
+            }
+
+        }
+        every { Client.httpClient } returns apiClient
+        every { mockNflService.insertPlayers(any()) } just Runs
+    }
+
+    @Test
+    fun `when request returns successfully, then insert stats into database 2`(): Unit = runBlocking {
+        syncNflStatsToDb(mockNflService, appConfiguration)
+        verify {
+            mockNflService.insertPlayers(withArg {
+                assertTrue { it.isNotEmpty() }
+                it.forEach { item ->
+                    assertTrue { !item.price.isNaN() }
+                    if (nflPositionalAdjustments.containsKey(item.position)) {
+                        assertTrue { item.price >= 0 }
+                    }
+                }
+            })
+        }
+
+    }
+
+    */
 }
