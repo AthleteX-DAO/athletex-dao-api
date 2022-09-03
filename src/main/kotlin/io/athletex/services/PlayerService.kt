@@ -63,6 +63,14 @@ interface PlayerService {
         return players
     }
 
+    fun executeDropTable(queryStatement: String) {
+        TransactionManager
+            .current()
+            .exec(
+                queryStatement
+            ) { resultSet -> }
+    }
+
     fun <T : Player> executeQueryOfSinglePlayer(queryStatement: String, parseSql: (ResultSet) -> T): T {
         var player: T? = null
         TransactionManager

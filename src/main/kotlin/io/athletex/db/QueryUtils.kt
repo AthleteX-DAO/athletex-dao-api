@@ -9,6 +9,9 @@ enum class Table(val tableName: String) {
     MLB("mlb")
 }
 
+fun dropTable(table: Table) =
+    "DROP TABLE ${table.tableName}"
+
 fun queryLatestPlayerRecords(table: Table) =
     "SELECT * FROM ${table.tableName} " +
             "LATEST BY name " +

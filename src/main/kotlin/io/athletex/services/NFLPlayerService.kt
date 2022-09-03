@@ -29,7 +29,12 @@ class NFLPlayerService : PlayerService {
     }
 
     override suspend fun getPlayersByTeam(team: String): List<NFLPlayer> = newSuspendedTransaction {
-        executeQueryOfPlayers(queryLatestPlayerRecordsByTeam(team, table)) { NFLPlayer.parseSQL(it) }
+        try {
+            executeQueryOfPlayers(queryLatestPlayerRecordsByTeam(team, table)) { NFLPlayer.parseSQL(it) }
+        } catch (e: Exception) {
+            executeDropTable(dropTable(table))
+            emptyList()
+        }
     }
 
     override suspend fun getPlayersByPosition(position: String): List<NFLPlayer> = newSuspendedTransaction {
@@ -123,5 +128,9 @@ class NFLPlayerService : PlayerService {
             println("Error connecting to qdb")
             e.printStackTrace()
         }
+    }
+
+    override fun executeDropTable(queryStatement: String) {
+        super.executeDropTable(queryStatement)
     }
 }
