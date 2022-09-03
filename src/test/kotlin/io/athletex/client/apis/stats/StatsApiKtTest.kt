@@ -1,8 +1,9 @@
 package io.athletex.client.apis.stats
 
 import io.athletex.client.Client
-import io.athletex.client.formulas.mlb.mlbPositionalAdjustments
+import io.athletex.client.formulas.mlbPositionalAdjustments
 import io.athletex.services.MLBPlayerService
+import io.athletex.services.NFLPlayerService
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -25,6 +26,13 @@ internal class StatsApiTest {
     private val mlbPlayerResponse = this::class.java.classLoader
         .getResource("mlb_player_response.json")?.readText()
 
+    private val mockNflService: NFLPlayerService = mockk()
+    private val nflPlayerResponse = this::class.java.classLoader
+        .getResource("nfl_player_response.json")?.readText()
+
+
+    // MLB Test
+
     @Before
     fun setUp() {
         mockkObject(Client)
@@ -37,6 +45,13 @@ internal class StatsApiTest {
                 "/v3/mlb/stats/json/PlayerSeasonStats/2022" -> {
                     respond(
                         content = ByteReadChannel("""$mlbPlayerResponse"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+                "/v3/nfl/stats/json/PlayerGameStatsByWeek/2022PRE/3" -> {
+                    respond(
+                        content = ByteReadChannel("""$nflPlayerResponse"""),
                         status = HttpStatusCode.OK,
                         headers = headersOf(HttpHeaders.ContentType, "application/json")
                     )
@@ -64,23 +79,41 @@ internal class StatsApiTest {
         }
         every { Client.httpClient } returns apiClient
         every { mockMlbService.insertPlayers(any()) } just Runs
+        every { mockNflService.insertPlayers(any()) } just Runs
     }
 
     @Test
     fun `when request returns successfully, then insert stats into database`(): Unit = runBlocking {
-        syncMlbStatsToDb(mockMlbService, appConfiguration)
+        syncMLBStatsToDb(mockMlbService, appConfiguration)
         verify {
             mockMlbService.insertPlayers(withArg {
                 assertTrue { it.isNotEmpty() }
                 it.forEach { item ->
-                    assertTrue { !item.price.isNaN() }
+                    assertTrue { !item.price!!.isNaN() }
                     if (mlbPositionalAdjustments.containsKey(item.position)) {
-                        assertTrue { item.price >= 0 }
+                        assertTrue { (item.price ?: 0.0) >= 0 }
                     }
                 }
             })
         }
 
     }
+
+
+    @Test
+    fun `when request returns successfully, then insert stats into database NFL`(): Unit = runBlocking {
+        syncNFLStatsToDb(mockNflService, appConfiguration)
+        verify {
+            mockNflService.insertPlayers(withArg {
+                assertTrue { it.isNotEmpty() }
+                it.forEach { item ->
+                    assertTrue { !item.price!!.isNaN() }
+                    assertTrue { (item.price ?: 0.0) >= 0 }
+                }
+            })
+        }
+
+    }
+
 
 }
