@@ -113,6 +113,7 @@ class NFLPlayerService : PlayerService {
                     .doubleColumn(it::receiveYards.name, it.receiveYards ?: 0.0)
                     .doubleColumn(it::receiveTouch.name, it.receiveTouch ?: 0.0)
                     .doubleColumn(it::rushingYards.name, it.rushingYards ?: 0.0)
+                    .doubleColumn(it::rushingTouch.name, it.rushingTouch ?: 0.0)
                     .doubleColumn(it::OffensiveSnapsPlayed.name, it.OffensiveSnapsPlayed ?: 0.0)
                     .doubleColumn(it::DefensiveSnapsPlayed.name, it.DefensiveSnapsPlayed ?: 0.0)
                     .doubleColumn(it::price.name, it.price ?: 0.0)

@@ -56,6 +56,7 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
             receiveYards = playerUpdate.receivingYards,
             receiveTouch = playerUpdate.receivingTouchdowns,
             rushingYards = playerUpdate.rushingYards,
+            rushingTouch = playerUpdate.rushingTouchdowns,
             OffensiveSnapsPlayed = playerUpdate.offensiveSnapsPlayed,
             DefensiveSnapsPlayed = playerUpdate.defensiveSnapsPlayed,
             price = computedPrice
