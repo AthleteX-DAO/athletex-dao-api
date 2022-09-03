@@ -53,12 +53,12 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
             passingYards = playerUpdate.passingYards,
             passingTouchDowns = playerUpdate.passingTouchdowns,
             reception = playerUpdate.receptions,
-            receiveYards = playerUpdate.receivingYards,
-            receiveTouch = playerUpdate.receivingTouchdowns,
+            receivingYards = playerUpdate.receivingYards,
+            receivingTouchdowns = playerUpdate.receivingTouchdowns,
             rushingYards = playerUpdate.rushingYards,
-            rushingTouch = playerUpdate.rushingTouchdowns,
-            OffensiveSnapsPlayed = playerUpdate.offensiveSnapsPlayed,
-            DefensiveSnapsPlayed = playerUpdate.defensiveSnapsPlayed,
+            rushingTouchdowns = playerUpdate.rushingTouchdowns,
+            offensiveSnapsPlayed = playerUpdate.offensiveSnapsPlayed,
+            defensiveSnapsPlayed = playerUpdate.defensiveSnapsPlayed,
             price = computedPrice
         )
     }
