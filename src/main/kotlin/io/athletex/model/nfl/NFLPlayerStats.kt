@@ -32,7 +32,7 @@ data class NFLPlayerStats(
                 stats.add(
                     Stats(
                         passingYards = row.getDouble(NFLPlayers.passingYards.name),
-                        passingTouchDowns = row.getDouble(NFLPlayers.passingTouchdowns.name),
+                        passingTouchdowns = row.getDouble(NFLPlayers.passingTouchdowns.name),
                         reception = row.getDouble(NFLPlayers.reception.name),
                         receivingYards = row.getDouble(NFLPlayers.receivingYards.name),
                         receivingTouchdowns = row.getDouble(NFLPlayers.receivingTouchdowns.name),
@@ -51,7 +51,7 @@ data class NFLPlayerStats(
     @Serializable
     data class Stats(
         val passingYards: Double,
-        val passingTouchDowns: Double,
+        val passingTouchdowns: Double,
         val reception: Double,
         val receivingYards: Double,
         val receivingTouchdowns: Double,
