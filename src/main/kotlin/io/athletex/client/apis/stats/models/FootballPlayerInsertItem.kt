@@ -11,6 +11,7 @@ data class FootballPlayerInsertItem(
     val receiveYards: Double?,
     val receiveTouch: Double?,
     val rushingYards: Double?,
+    val rushingTouch: Double?,
     val OffensiveSnapsPlayed: Double?,
     val DefensiveSnapsPlayed: Double?,
     val price: Double?,

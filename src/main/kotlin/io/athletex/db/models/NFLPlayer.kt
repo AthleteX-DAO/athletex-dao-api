@@ -20,7 +20,6 @@ object NFLPlayers : Table("nfl") {
     val offensiveSnapsPlayed : Column<Double> = double("OffensiveSnapsPlayed")
     val defensiveSnapsPlayed : Column<Double> = double("DefensiveSnapsPlayed")
     val price : Column<Double> = double("price")
-    val touchdowns : Column<Double> = double("touchdowns")
     val passingInterceptions : Column<Double> = double("passingInterceptions")
     val fumblesLost : Column<Double> = double("fumblesLost")
     val rushingTouchdowns : Column<Double> = double("rushingTouchdowns")
