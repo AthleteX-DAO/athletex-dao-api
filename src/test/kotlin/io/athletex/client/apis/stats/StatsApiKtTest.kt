@@ -49,7 +49,7 @@ internal class StatsApiTest {
                         headers = headersOf(HttpHeaders.ContentType, "application/json")
                     )
                 }
-                "/v3/nfl/stats/json/PlayerGameStatsByWeek/2022PRE/3" -> {
+                "/v3/nfl/stats/json/PlayerSeasonStats/2022" -> {
                     respond(
                         content = ByteReadChannel("""$nflPlayerResponse"""),
                         status = HttpStatusCode.OK,
