@@ -41,7 +41,7 @@ suspend fun syncNFLStatsToDb(nflPlayerService: NFLPlayerService, config: HoconAp
 
 private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUpdateItem>): List<FootballPlayerInsertItem> {
     println("NFL stats response size = ${playerStatsResponse.size}")
-
+    if(playerStatsResponse.isEmpty()) return getDefaultNflPlayers()
     val statsUpdate = playerStatsResponse.map { playerUpdate ->
         val name = playerUpdate.name.removeNonSpacingMarks()
         val computedPrice = computeNFLPrice(playerUpdate)
@@ -68,6 +68,108 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
         println("${it::name} = $it")
     }
     return statsUpdate
+}
+
+fun getDefaultNflPlayers(): List<FootballPlayerInsertItem> {
+    return listOf(
+        FootballPlayerInsertItem(
+            name = "Josh Allen",
+            id = 19801,
+            team = "BUF",
+            position = "QB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Justin Herbert",
+            id = 21681,
+            team = "LAC",
+            position = "QB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Patrick Mahomes",
+            id = 18890,
+            team = "KC",
+            position = "QB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Lamar Jackson",
+            id = 22049,
+            team = "BAL",
+            position = "QB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Jonathan Taylor",
+            id = 21682,
+            team = "IND",
+            position = "RB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Derrick Henry",
+            id = 17959,
+            team = "TEN",
+            position = "RB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Christian McCaffrey",
+            id = 18877,
+            team = "CAR",
+            position = "RB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Austin Ekeler",
+            id = 19562,
+            team = "LAC",
+            position = "RB",
+        ),
+        FootballPlayerInsertItem(
+            name = "Cooper Kupp",
+            id = 18882,
+            team = "LAR",
+            position = "WR",
+        ),
+        FootballPlayerInsertItem(
+            name = "Justin Jefferson",
+            id = 21685,
+            team = "MIN",
+            position = "WR",
+        ),
+        FootballPlayerInsertItem(
+            name = "Ja'Marr Chase",
+            id = 22564,
+            team = "CIN",
+            position = "WR",
+        ),
+        FootballPlayerInsertItem(
+            name = "Travis Kelce",
+            id = 15048,
+            team = "KC",
+            position = "TE",
+        ),
+        FootballPlayerInsertItem(
+            name = "Mark Andrews",
+            id = 19803,
+            team = "BAL",
+            position = "TE",
+        ),
+        FootballPlayerInsertItem(
+            name = "Kyle Pitts",
+            id = 22508,
+            team = "ATL",
+            position = "TE",
+        ),
+        FootballPlayerInsertItem(
+            name = "George Kittle",
+            id = 19063,
+            team = "SF",
+            position = "TE",
+        ),
+        FootballPlayerInsertItem(
+            name = "Justin Fields",
+            id = 22492,
+            team = "CHI",
+            position = "QB",
+        ),
+    )
+
 }
 
 suspend fun syncMLBStatsToDb(mlbPlayerService: MLBPlayerService, config: HoconApplicationConfig = appConfig) {
