@@ -105,4 +105,13 @@ interface PlayerService {
         return priceRecords!!
     }
 
+    suspend fun getPlayerPriceHistories(
+        playerIds: PlayerIds,
+        from: String?,
+        until: String?,
+        interval: String
+    ): List<PlayerPriceHistory> {
+        return playerIds.ids.map { getPlayerPriceHistory(it, from, until, interval) }
+    }
+
 }
