@@ -16,10 +16,19 @@ fun computeNFLPrice(feedUpdateItem: FootballFeedUpdateItem): Double {
     val fumblesLost = (feedUpdateItem.fumblesLost ?: 0.0) * -2
 
     // Football Athletes
-    val numerator = passingYards + rushingYards + receivingYards + rushingTouchdowns + receivingTouchdowns + passTD + reception + passingIntercept + fumblesLost
-    var denominator = feedUpdateItem.offensiveSnapsPlayed?.times(1000)
+    val numerator =
+        (passingYards +
+                rushingYards +
+                receivingYards +
+                rushingTouchdowns +
+                receivingTouchdowns +
+                 passTD +
+                 reception +
+                 passingIntercept +
+                 fumblesLost).times(1000)
+    var denominator = feedUpdateItem.offensiveSnapsPlayed
     if (denominator == 0.0) {
-        denominator = feedUpdateItem.defensiveSnapsPlayed?.times(1000)
+        denominator = feedUpdateItem.defensiveSnapsPlayed
     }
 
     if (denominator == 0.0 || denominator == null) {
