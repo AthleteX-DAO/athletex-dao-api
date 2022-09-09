@@ -125,6 +125,7 @@ class NFLPlayerService : PlayerService {
             println("Error connecting to qdb")
             e.printStackTrace()
         }
+        sender.flush()
     }
 
     override fun executeDropTable(queryStatement: String) {
