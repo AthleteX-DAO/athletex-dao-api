@@ -7,8 +7,6 @@ import kotlinx.serialization.SerialName
 data class FootballFeedUpdateItem(
     @SerialName("PlayerID")
     val playerId: Double,
-    @SerialName("SeasonType")
-    val seasonType: Double,
     @SerialName("Season")
     val season: Double,
     @SerialName("Team")
@@ -165,106 +163,10 @@ data class FootballFeedUpdateItem(
     val receivingYardsPerTarget: Double,
     @SerialName("Tackles")
     val tackles: Double,
-    @SerialName("OffensiveTouchdowns")
-    val offensiveTouchdowns: Double,
-    @SerialName("DefensiveTouchdowns")
-    val defensiveTouchdowns: Double,
-    @SerialName("SpecialTeamsTouchdowns")
-    val specialTeamsTouchdowns: Double,
     @SerialName("Touchdowns")
     val touchdowns: Int,
-    @SerialName("FantasyPosition")
-    val fantasyPosition: Double,
-    @SerialName("FieldGoalPercentage")
-    val fieldGoalPercentage: String,
-    @SerialName("PlayerSeasonID")
-    val playerSeasonID: String,
-    @SerialName("FumblesOwnRecoveries")
-    val fumblesOwnRecoveries: Double,
-    @SerialName("FumblesOutOfBounds")
-    val fumblesOutOfBounds: Double,
-    @SerialName("KickReturnFairCatches")
-    val kickReturnFairCatches: Double,
-    @SerialName("PuntReturnFairCatches")
-    val puntReturnFairCatches: Double,
-    @SerialName("PuntTouchbacks")
-    val puntTouchbacks: Double,
-    @SerialName("PuntInside20")
-    val puntInside20: Double,
-    @SerialName("PuntNetAverage")
-    val puntNetAverage: Double,
-    @SerialName("ExtraPointsAttempted")
-    val extraPointsAttempted: Double,
-    @SerialName("BlockedKickReturnTouchdowns")
-    val blockedKickReturnTouchdowns: Double,
-    @SerialName("FieldGoalReturnTouchdowns")
-    val fieldGoalReturnTouchdowns: Double,
-    @SerialName("Safeties")
-    val safeties: Double,
-    @SerialName("FieldGoalsHadBlocked")
-    val fieldGoalsHadBlocked: Double,
-    @SerialName("PuntsHadBlocked")
-    val puntsHadBlocked: Double,
-    @SerialName("ExtraPointsHadBlocked")
-    val extraPointsHadBlocked: Double,
-    @SerialName("PuntLong")
-    val puntLong: Double,
-    @SerialName("BlockedKickReturnYards")
-    val blockedKickReturnYards: Double,
-    @SerialName("FieldGoalReturnYards")
-    val fieldGoalReturnYards: Double,
-    @SerialName("PuntNetYards")
-    val puntNetYards: Double,
-    @SerialName("SpecialTeamsFumblesForced")
-    val specialTeamsFumblesForced: Double,
-    @SerialName("SpecialTeamsFumblesRecovered")
-    val specialTeamsFumblesRecovered: Double,
-    @SerialName("MiscFumblesForced")
-    val miscFumblesForced: Double,
-    @SerialName("MiscFumblesRecovered")
-    val miscFumblesRecovered: Double,
-    @SerialName("ShortName")
-    val shortName: String,
-    @SerialName("SafetiesAllowed")
-    val safetiesAllowed: Double,
-    @SerialName("Temperature")
-    val temperature: Double,
-    @SerialName("Humidity")
-    val humidity: Double,
-    @SerialName("WindSpeed")
-    val windSpeed: Double,
     @SerialName("OffensiveSnapsPlayed")
     val offensiveSnapsPlayed: Double,
     @SerialName("DefensiveSnapsPlayed")
     val defensiveSnapsPlayed: Double,
-    @SerialName("SpecialTeamsSnapsPlayed")
-    val specialTeamsSnapsPlayed: Double,
-    @SerialName("OffensiveTeamSnaps")
-    val offensiveTeamSnaps: Double,
-    @SerialName("DefensiveTeamSnaps")
-    val defensiveTeamSnaps: Double,
-    @SerialName("SpecialTeamsTeamSnaps")
-    val specialTeamsTeamSnaps: Double,
-    @SerialName("TwoPointConversionReturns")
-    val twoPointConversionReturns: Double,
-    @SerialName("FantasyPointsFanDuel")
-    val fantasyPointsFanDuel: Double,
-    @SerialName("FieldGoalsMade0to19")
-    val fieldGoalsMade0to19: Double,
-    @SerialName("FieldGoalsMade20to29")
-    val fieldGoalsMade20to29: Double,
-    @SerialName("FieldGoalsMade30to39")
-    val fieldGoalsMade30to39: Double,
-    @SerialName("FieldGoalsMade40to49")
-    val fieldGoalsMade40to49: Double,
-    @SerialName("FieldGoalsMade50Plus")
-    val fieldGoalsMade50Plus: Double,
-    @SerialName("FantasyPointsDraftKings")
-    val fantasyPointsDraftKings: Double,
-    @SerialName("FantasyPointsYahoo")
-    val fantasyPointsYahoo: Double,
-    @SerialName("TeamID")
-    val teamID: Double,
-    @SerialName("GlobalTeamID")
-    val globalTeamID: Double,
 )
