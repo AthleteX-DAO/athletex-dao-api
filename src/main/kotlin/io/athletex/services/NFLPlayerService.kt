@@ -29,12 +29,7 @@ class NFLPlayerService : PlayerService {
     }
 
     override suspend fun getPlayersByTeam(team: String): List<NFLPlayer> = newSuspendedTransaction {
-        try {
-            executeQueryOfPlayers(queryLatestPlayerRecordsByTeam(team, table)) { NFLPlayer.parseSQL(it) }
-        } catch (e: Exception) {
-            executeDropTable(dropTable(table))
-            emptyList()
-        }
+        executeQueryOfPlayers(queryLatestPlayerRecordsByTeam(team, table)) { NFLPlayer.parseSQL(it) }
     }
 
     override suspend fun getPlayersByPosition(position: String): List<NFLPlayer> = newSuspendedTransaction {
