@@ -17,12 +17,13 @@ fun computeNFLPrice(feedUpdateItem: FootballFeedUpdateItem): Double {
 
     // Football Athletes
     val numerator = passingYards + rushingYards + receivingYards + rushingTouchdowns + receivingTouchdowns + passTD + reception + passingIntercept + fumblesLost
-    var denominator = feedUpdateItem.offensiveSnapsPlayed
+    var denominator = feedUpdateItem.offensiveSnapsPlayed?.times(1000)
     if (denominator == 0.0) {
-        denominator = feedUpdateItem.defensiveSnapsPlayed
+        denominator = feedUpdateItem.defensiveSnapsPlayed?.times(1000)
     }
+
     if (denominator == 0.0 || denominator == null) {
-        denominator = 1.0
+        return 0.0 // If denominator is 0, return 0
     }
 
     var computedAmericanFootballPrice = numerator / (denominator)
