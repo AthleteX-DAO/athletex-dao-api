@@ -83,15 +83,15 @@ private fun parseMLBStatsUpdateResponse(playerStatsResponse: List<BaseballFeedUp
 
     var lgWeightOnBase = 0.0
     var sumLeaguePlateAppearances = 0.0
-    playerStatsResponse.filter { it.plateAppearances > 0 }.forEach {
-        lgWeightOnBase += it.weightedOnBasePercentage
-        sumLeaguePlateAppearances += it.plateAppearances
+    playerStatsResponse.filter { (it.plateAppearances ?: 0.0) > 0 }.forEach {
+        lgWeightOnBase += it.weightedOnBasePercentage ?: 0.0
+        sumLeaguePlateAppearances += it.plateAppearances ?: 0.0
     }
     lgWeightOnBase /= playerStatsResponse.size
 
     val statsUpdate = playerStatsResponse.map { playerUpdate ->
         val name = playerUpdate.name.removeNonSpacingMarks()
-        val inningsPlayed = playerUpdate.games * 9.0
+        val inningsPlayed = (playerUpdate.games ?: 0.0) * 9.0
         val computedPrice = computeMLBPrice(playerUpdate, lgWeightOnBase, sumLeaguePlateAppearances)
         BaseballPlayerInsertItem(
             id = playerUpdate.playerID,
@@ -115,7 +115,7 @@ private fun parseMLBStatsUpdateResponse(playerStatsResponse: List<BaseballFeedUp
             strikeOuts = playerUpdate.strikeouts,
             stolenBases = playerUpdate.stolenBases,
             plateAppearances = playerUpdate.plateAppearances,
-            weightedOnBasePercentage = playerUpdate.weightedOnBasePercentage.toDouble(),
+            weightedOnBasePercentage = playerUpdate.weightedOnBasePercentage,
             price = computedPrice
         )
     }

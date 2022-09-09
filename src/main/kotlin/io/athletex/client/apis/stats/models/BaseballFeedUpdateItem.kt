@@ -6,225 +6,225 @@ import kotlinx.serialization.SerialName
 @Serializable
 data class BaseballFeedUpdateItem(
     @SerialName("AtBats")
-    val atBats: Double,
+    val atBats: Double?,
     @SerialName("BallsInPlay")
-    val ballsInPlay: Double,
+    val ballsInPlay: Double?,
     @SerialName("BattingAverage")
-    val battingAverage: Double,
+    val battingAverage: Double?,
     @SerialName("BattingAverageOnBallsInPlay")
-    val battingAverageOnBallsInPlay: Double,
+    val battingAverageOnBallsInPlay: Double?,
     @SerialName("BattingOrderConfirmed")
     val battingOrderConfirmed: Boolean,
     @SerialName("CaughtStealing")
-    val caughtStealing: Double,
+    val caughtStealing: Double?,
     @SerialName("DoublePlays")
-    val doublePlays: Double,
+    val doublePlays: Double?,
     @SerialName("Doubles")
-    val doubles: Double,
+    val doubles: Double?,
     @SerialName("EarnedRunAverage")
-    val earnedRunAverage: Double,
+    val earnedRunAverage: Double?,
     @SerialName("Errors")
-    val errors: Double,
+    val errors: Double?,
     @SerialName("FantasyPoints")
-    val fantasyPoints: Double,
+    val fantasyPoints: Double?,
     @SerialName("FantasyPointsBatting")
-    val fantasyPointsBatting: Double,
+    val fantasyPointsBatting: Double?,
     @SerialName("FantasyPointsDraftKings")
-    val fantasyPointsDraftKings: Double,
+    val fantasyPointsDraftKings: Double?,
     @SerialName("FantasyPointsFanDuel")
-    val fantasyPointsFanDuel: Double,
+    val fantasyPointsFanDuel: Double?,
     @SerialName("FantasyPointsFantasyDraft")
-    val fantasyPointsFantasyDraft: Double,
+    val fantasyPointsFantasyDraft: Double?,
     @SerialName("FantasyPointsPitching")
-    val fantasyPointsPitching: Double,
+    val fantasyPointsPitching: Double?,
     @SerialName("FantasyPointsYahoo")
-    val fantasyPointsYahoo: Double,
+    val fantasyPointsYahoo: Double?,
     @SerialName("FieldingIndependentPitching")
-    val fieldingIndependentPitching: Double,
+    val fieldingIndependentPitching: Double?,
     @SerialName("FlyOuts")
-    val flyOuts: Double,
+    val flyOuts: Double?,
     @SerialName("Games")
-    val games: Double,
+    val games: Double?,
     @SerialName("GlobalTeamID")
-    val globalTeamID: Double,
+    val globalTeamID: Double?,
     @SerialName("GrandSlams")
-    val grandSlams: Double,
+    val grandSlams: Double?,
     @SerialName("GroundIntoDoublePlay")
-    val groundIntoDoublePlay: Double,
+    val groundIntoDoublePlay: Double?,
     @SerialName("GroundOuts")
-    val groundOuts: Double,
+    val groundOuts: Double?,
     @SerialName("HitByPitch")
-    val hitByPitch: Double,
+    val hitByPitch: Double?,
     @SerialName("Hits")
-    val hits: Double,
+    val hits: Double?,
     @SerialName("HomeRuns")
-    val homeRuns: Double,
+    val homeRuns: Double?,
     @SerialName("InningsPitchedDecimal")
-    val inningsPitchedDecimal: Double,
+    val inningsPitchedDecimal: Double?,
     @SerialName("InningsPitchedFull")
-    val inningsPitchedFull: Double,
+    val inningsPitchedFull: Double?,
     @SerialName("InningsPitchedOuts")
-    val inningsPitchedOuts: Double,
+    val inningsPitchedOuts: Double?,
     @SerialName("IntentionalWalks")
-    val intentionalWalks: Double,
+    val intentionalWalks: Double?,
     @SerialName("IsolatedPower")
-    val isolatedPower: Double,
+    val isolatedPower: Double?,
     @SerialName("LeftOnBase")
-    val leftOnBase: Double,
+    val leftOnBase: Double?,
     @SerialName("LineOuts")
-    val lineOuts: Double,
+    val lineOuts: Double?,
     @SerialName("Losses")
-    val losses: Double,
+    val losses: Double?,
     @SerialName("Name")
     val name: String,
     @SerialName("OnBasePercentage")
-    val onBasePercentage: Double,
+    val onBasePercentage: Double?,
     @SerialName("OnBasePlusSlugging")
-    val onBasePlusSlugging: Double,
+    val onBasePlusSlugging: Double?,
     @SerialName("Outs")
-    val outs: Double,
+    val outs: Double?,
     @SerialName("PitchesSeen")
-    val pitchesSeen: Double,
+    val pitchesSeen: Double?,
     @SerialName("PitchesThrown")
-    val pitchesThrown: Double,
+    val pitchesThrown: Double?,
     @SerialName("PitchesThrownStrikes")
-    val pitchesThrownStrikes: Double,
+    val pitchesThrownStrikes: Double?,
     @SerialName("PitchingBallsInPlay")
-    val pitchingBallsInPlay: Double,
+    val pitchingBallsInPlay: Double?,
     @SerialName("PitchingBattingAverageAgainst")
-    val pitchingBattingAverageAgainst: Double,
+    val pitchingBattingAverageAgainst: Double?,
     @SerialName("PitchingBattingAverageOnBallsInPlay")
-    val pitchingBattingAverageOnBallsInPlay: Double,
+    val pitchingBattingAverageOnBallsInPlay: Double?,
     @SerialName("PitchingBlownSaves")
-    val pitchingBlownSaves: Double,
+    val pitchingBlownSaves: Double?,
     @SerialName("PitchingCatchersInterference")
-    val pitchingCatchersInterference: Double,
+    val pitchingCatchersInterference: Double?,
     @SerialName("PitchingCompleteGames")
-    val pitchingCompleteGames: Double,
+    val pitchingCompleteGames: Double?,
     @SerialName("PitchingDoublePlays")
-    val pitchingDoublePlays: Double,
+    val pitchingDoublePlays: Double?,
     @SerialName("PitchingDoubles")
-    val pitchingDoubles: Double,
+    val pitchingDoubles: Double?,
     @SerialName("PitchingEarnedRuns")
-    val pitchingEarnedRuns: Double,
+    val pitchingEarnedRuns: Double?,
     @SerialName("PitchingFlyOuts")
-    val pitchingFlyOuts: Double,
+    val pitchingFlyOuts: Double?,
     @SerialName("PitchingGrandSlams")
-    val pitchingGrandSlams: Double,
+    val pitchingGrandSlams: Double?,
     @SerialName("PitchingGroundIntoDoublePlay")
-    val pitchingGroundIntoDoublePlay: Double,
+    val pitchingGroundIntoDoublePlay: Double?,
     @SerialName("PitchingGroundOuts")
-    val pitchingGroundOuts: Double,
+    val pitchingGroundOuts: Double?,
     @SerialName("PitchingHitByPitch")
-    val pitchingHitByPitch: Double,
+    val pitchingHitByPitch: Double?,
     @SerialName("PitchingHits")
-    val pitchingHits: Double,
+    val pitchingHits: Double?,
     @SerialName("PitchingHolds")
-    val pitchingHolds: Double,
+    val pitchingHolds: Double?,
     @SerialName("PitchingHomeRuns")
-    val pitchingHomeRuns: Double,
+    val pitchingHomeRuns: Double?,
     @SerialName("PitchingIntentionalWalks")
-    val pitchingIntentionalWalks: Double,
+    val pitchingIntentionalWalks: Double?,
     @SerialName("PitchingLineOuts")
-    val pitchingLineOuts: Double,
+    val pitchingLineOuts: Double?,
     @SerialName("PitchingNoHitters")
-    val pitchingNoHitters: Double,
+    val pitchingNoHitters: Double?,
     @SerialName("PitchingOnBasePercentage")
-    val pitchingOnBasePercentage: Double,
+    val pitchingOnBasePercentage: Double?,
     @SerialName("PitchingOnBasePlusSlugging")
-    val pitchingOnBasePlusSlugging: Double,
+    val pitchingOnBasePlusSlugging: Double?,
     @SerialName("PitchingPerfectGames")
-    val pitchingPerfectGames: Double,
+    val pitchingPerfectGames: Double?,
     @SerialName("PitchingPlateAppearances")
-    val pitchingPlateAppearances: Double,
+    val pitchingPlateAppearances: Double?,
     @SerialName("PitchingPopOuts")
-    val pitchingPopOuts: Double,
+    val pitchingPopOuts: Double?,
     @SerialName("PitchingQualityStarts")
-    val pitchingQualityStarts: Double,
+    val pitchingQualityStarts: Double?,
     @SerialName("PitchingReachedOnError")
-    val pitchingReachedOnError: Double,
+    val pitchingReachedOnError: Double?,
     @SerialName("PitchingRuns")
-    val pitchingRuns: Double,
+    val pitchingRuns: Double?,
     @SerialName("PitchingSacrificeFlies")
-    val pitchingSacrificeFlies: Double,
+    val pitchingSacrificeFlies: Double?,
     @SerialName("PitchingSacrifices")
-    val pitchingSacrifices: Double,
+    val pitchingSacrifices: Double?,
     @SerialName("PitchingShutOuts")
-    val pitchingShutOuts: Double,
+    val pitchingShutOuts: Double?,
     @SerialName("PitchingSingles")
-    val pitchingSingles: Double,
+    val pitchingSingles: Double?,
     @SerialName("PitchingSluggingPercentage")
-    val pitchingSluggingPercentage: Double,
+    val pitchingSluggingPercentage: Double?,
     @SerialName("PitchingStrikeouts")
-    val pitchingStrikeouts: Double,
+    val pitchingStrikeouts: Double?,
     @SerialName("PitchingStrikeoutsPerNineInnings")
-    val pitchingStrikeoutsPerNineInnings: Double,
+    val pitchingStrikeoutsPerNineInnings: Double?,
     @SerialName("PitchingTotalBases")
-    val pitchingTotalBases: Double,
+    val pitchingTotalBases: Double?,
     @SerialName("PitchingTriples")
-    val pitchingTriples: Double,
+    val pitchingTriples: Double?,
     @SerialName("PitchingWalks")
-    val pitchingWalks: Double,
+    val pitchingWalks: Double?,
     @SerialName("PitchingWalksPerNineInnings")
-    val pitchingWalksPerNineInnings: Double,
+    val pitchingWalksPerNineInnings: Double?,
     @SerialName("PitchingWeightedOnBasePercentage")
-    val pitchingWeightedOnBasePercentage: Double,
+    val pitchingWeightedOnBasePercentage: Double?,
     @SerialName("PlateAppearances")
-    val plateAppearances: Double,
+    val plateAppearances: Double?,
     @SerialName("PlayerID")
     val playerID: Int,
     @SerialName("PopOuts")
-    val popOuts: Double,
+    val popOuts: Double?,
     @SerialName("Position")
     val position: String,
     @SerialName("PositionCategory")
     val positionCategory: String,
     @SerialName("ReachedOnError")
-    val reachedOnError: Double,
+    val reachedOnError: Double?,
     @SerialName("Runs")
-    val runs: Double,
+    val runs: Double?,
     @SerialName("RunsBattedIn")
-    val runsBattedIn: Double,
+    val runsBattedIn: Double?,
     @SerialName("SacrificeFlies")
-    val sacrificeFlies: Double,
+    val sacrificeFlies: Double?,
     @SerialName("Sacrifices")
-    val sacrifices: Double,
+    val sacrifices: Double?,
     @SerialName("Saves")
-    val saves: Double,
+    val saves: Double?,
     @SerialName("Season")
-    val season: Double,
+    val season: Double?,
     @SerialName("SeasonType")
-    val seasonType: Double,
+    val seasonType: Double?,
     @SerialName("Singles")
-    val singles: Double,
+    val singles: Double?,
     @SerialName("SluggingPercentage")
-    val sluggingPercentage: Double,
+    val sluggingPercentage: Double?,
     @SerialName("Started")
-    val started: Double,
+    val started: Double?,
     @SerialName("StatID")
-    val statID: Double,
+    val statID: Double?,
     @SerialName("StolenBases")
-    val stolenBases: Double,
+    val stolenBases: Double?,
     @SerialName("Strikeouts")
-    val strikeouts: Double,
+    val strikeouts: Double?,
     @SerialName("Team")
     val team: String,
     @SerialName("TeamID")
-    val teamID: Double,
+    val teamID: Double?,
     @SerialName("TotalBases")
-    val totalBases: Double,
+    val totalBases: Double?,
     @SerialName("TotalOutsPitched")
-    val totalOutsPitched: Double,
+    val totalOutsPitched: Double?,
     @SerialName("Triples")
-    val triples: Double,
+    val triples: Double?,
     @SerialName("Updated")
     val updated: String,
     @SerialName("Walks")
-    val walks: Double,
+    val walks: Double?,
     @SerialName("WalksHitsPerInningsPitched")
-    val walksHitsPerInningsPitched: Double,
+    val walksHitsPerInningsPitched: Double?,
     @SerialName("WeightedOnBasePercentage")
-    val weightedOnBasePercentage: Double,
+    val weightedOnBasePercentage: Double?,
     @SerialName("Wins")
-    val wins: Double
+    val wins: Double?
 )

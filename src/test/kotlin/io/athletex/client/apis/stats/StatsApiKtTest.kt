@@ -25,7 +25,7 @@ internal class StatsApiTest {
     private val mockMlbService: MLBPlayerService = mockk()
     private val mlbPlayerResponse = this::class.java.classLoader
         .getResource("mlb_player_response.json")?.readText()
-        
+
     private val mockNflService: NFLPlayerService = mockk()
     private val nflPlayerResponse = this::class.java.classLoader
         .getResource("nfl_player_response.json")?.readText()
@@ -89,9 +89,9 @@ internal class StatsApiTest {
             mockMlbService.insertPlayers(withArg {
                 assertTrue { it.isNotEmpty() }
                 it.forEach { item ->
-                    assertTrue { !item.price.isNaN() }
+                    assertTrue { !item.price!!.isNaN() }
                     if (mlbPositionalAdjustments.containsKey(item.position)) {
-                        assertTrue { item.price >= 0 }
+                        assertTrue { (item.price ?: 0.0) >= 0 }
                     }
                 }
             })
@@ -107,11 +107,16 @@ internal class StatsApiTest {
             mockNflService.insertPlayers(withArg {
                 assertTrue { it.isNotEmpty() }
                 it.forEach { item ->
-                    assertTrue { !item.price.isNaN() }
-                    assertTrue { item.price >= 0 }
+                    assertTrue { !item.price!!.isNaN() }
+                    assertTrue { (item.price ?: 0.0) >= 0 }
                 }
             })
         }
 
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e21abcccaecdbfd7e567f3246d60a11119a21f3d
 }
