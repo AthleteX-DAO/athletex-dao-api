@@ -19,6 +19,8 @@ fun Application.sportsRoutes(playerService: PlayerService, endpoint: SportEndpoi
 
             getPlayersHistories(playerService)
 
+            getPlayerPriceHistories(playerService)
+
             getStatsFeedForPlayerById(playerService) { encodePlayerToJson(it) }
 
             updateDB(playerService)

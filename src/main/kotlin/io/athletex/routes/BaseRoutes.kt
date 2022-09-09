@@ -102,6 +102,29 @@ internal fun Route.getPlayerPriceHistory(playerService: PlayerService) {
     }
 }
 
+internal fun Route.getPlayerPriceHistories(playerService: PlayerService) {
+    post("/players/history/price") {
+        try {
+            val from: String? = call.request.queryParameters["from"]
+            val until: String? = call.request.queryParameters["until"]
+            val interval: String? = call.request.queryParameters["interval"]
+            val playerIds = call.receiveOrNull<PlayerIds>()
+            if (playerIds != null) {
+                call.respond(
+                    HttpStatusCode.OK,
+                    playerService.getPlayerPriceHistories(playerIds, from, until, (interval ?: "2h"))
+                )
+            } else {
+                call.respond(HttpStatusCode.BadRequest, "ids of athletes were missing")
+            }
+        } catch (e: NullPointerException) {
+            call.respond(HttpStatusCode.NotFound, "Player by this id is not found")
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
+        }
+    }
+}
+
 internal fun Route.getPlayersHistories(playerService: PlayerService) {
     post("/players/history") {
         try {
