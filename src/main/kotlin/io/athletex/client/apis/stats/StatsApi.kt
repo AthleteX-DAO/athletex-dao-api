@@ -41,7 +41,7 @@ suspend fun syncNFLStatsToDb(nflPlayerService: NFLPlayerService, config: HoconAp
 
 private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUpdateItem>): List<FootballPlayerInsertItem> {
     println("NFL stats response size = ${playerStatsResponse.size}")
-    val statsUpdate = playerStatsResponse.map { playerUpdate ->
+    val statsUpdate: MutableList<FootballPlayerInsertItem> = playerStatsResponse.map { playerUpdate ->
         val name = playerUpdate.name.removeNonSpacingMarks()
         val computedPrice = computeNFLPrice(playerUpdate)
         FootballPlayerInsertItem(
@@ -62,13 +62,13 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
             fumblesLost = playerUpdate.fumblesLost,
             price = computedPrice
         )
-    }
+    }.toMutableList()
 
     getDefaultNflPlayers().map { defaultPlayer ->
         val existingPlayer = statsUpdate.find { it.name == defaultPlayer.name }
         if (existingPlayer == null) {
             println("adding missing player ${defaultPlayer.name}")
-            statsUpdate.plus(defaultPlayer)
+            statsUpdate.add(defaultPlayer)
         }
     }
 
