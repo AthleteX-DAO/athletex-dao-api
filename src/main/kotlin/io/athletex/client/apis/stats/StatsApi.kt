@@ -65,7 +65,7 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
     }.toMutableList()
 
     getDefaultNflPlayers().map { defaultPlayer ->
-        val existingPlayer = statsUpdate.find { it.name == defaultPlayer.name }
+        val existingPlayer = statsUpdate.find { it.id == defaultPlayer.id }
         if (existingPlayer == null) {
             println("adding missing player ${defaultPlayer.name}")
             statsUpdate.add(defaultPlayer)
@@ -81,97 +81,97 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
 fun getDefaultNflPlayers(): List<FootballPlayerInsertItem> {
     return listOf(
         FootballPlayerInsertItem(
-            name = "Josh Allen",
+            name = "J.Allen",
             id = 19801,
             team = "BUF",
             position = "QB",
         ),
         FootballPlayerInsertItem(
-            name = "Justin Herbert",
+            name = "J.Herbert",
             id = 21681,
             team = "LAC",
             position = "QB",
         ),
         FootballPlayerInsertItem(
-            name = "Patrick Mahomes",
+            name = "P.Mahomes",
             id = 18890,
             team = "KC",
             position = "QB",
         ),
         FootballPlayerInsertItem(
-            name = "Lamar Jackson",
+            name = "L.Jackson",
             id = 22049,
             team = "BAL",
             position = "QB",
         ),
         FootballPlayerInsertItem(
-            name = "Jonathan Taylor",
+            name = "J.Taylor",
             id = 21682,
             team = "IND",
             position = "RB",
         ),
         FootballPlayerInsertItem(
-            name = "Derrick Henry",
+            name = "D.Henry",
             id = 17959,
             team = "TEN",
             position = "RB",
         ),
         FootballPlayerInsertItem(
-            name = "Christian McCaffrey",
+            name = "C.McCaffrey",
             id = 18877,
             team = "CAR",
             position = "RB",
         ),
         FootballPlayerInsertItem(
-            name = "Austin Ekeler",
+            name = "A.Ekeler",
             id = 19562,
             team = "LAC",
             position = "RB",
         ),
         FootballPlayerInsertItem(
-            name = "Cooper Kupp",
+            name = "C.Kupp",
             id = 18882,
             team = "LAR",
             position = "WR",
         ),
         FootballPlayerInsertItem(
-            name = "Justin Jefferson",
+            name = "J.Jefferson",
             id = 21685,
             team = "MIN",
             position = "WR",
         ),
         FootballPlayerInsertItem(
-            name = "Ja'Marr Chase",
+            name = "J.Chase",
             id = 22564,
             team = "CIN",
             position = "WR",
         ),
         FootballPlayerInsertItem(
-            name = "Travis Kelce",
+            name = "T.Kelce",
             id = 15048,
             team = "KC",
             position = "TE",
         ),
         FootballPlayerInsertItem(
-            name = "Mark Andrews",
+            name = "M.Andrews",
             id = 19803,
             team = "BAL",
             position = "TE",
         ),
         FootballPlayerInsertItem(
-            name = "Kyle Pitts",
+            name = "K.Pitts",
             id = 22508,
             team = "ATL",
             position = "TE",
         ),
         FootballPlayerInsertItem(
-            name = "George Kittle",
+            name = "G.Kittle",
             id = 19063,
             team = "SF",
             position = "TE",
         ),
         FootballPlayerInsertItem(
-            name = "Justin Fields",
+            name = "J.Fields",
             id = 22492,
             team = "CHI",
             position = "QB",
