@@ -109,7 +109,9 @@ internal class StatsApiTest {
                 it.forEach { item ->
                     assertTrue { !item.price!!.isNaN() }
                     assertTrue { (item.price ?: 0.0) >= 0 }
+                    println("name: ${item.name}, id: ${item.id}, price: ${item.price}")
                 }
+                println("complete")
             })
         }
 
