@@ -25,7 +25,7 @@ fun computeNFLPrice(feedUpdateItem: FootballFeedUpdateItem): Double {
                  passTD +
                  reception +
                  passingIntercept +
-                 fumblesLost).times(1000)
+                 fumblesLost)
     var denominator = feedUpdateItem.offensiveSnapsPlayed
     if (denominator == 0.0) {
         denominator = feedUpdateItem.defensiveSnapsPlayed

@@ -64,16 +64,12 @@ private fun parseNFLStatsUpdateResponse(playerStatsResponse: List<FootballFeedUp
         )
     }.toMutableList()
 
-    getDefaultNflPlayers().map { defaultPlayer ->
+    getDefaultNflPlayers().forEach { defaultPlayer ->
         val existingPlayer = statsUpdate.find { it.id == defaultPlayer.id }
         if (existingPlayer == null) {
             println("adding missing player ${defaultPlayer.name}")
             statsUpdate.add(defaultPlayer)
         }
-    }
-
-    statsUpdate::class.memberProperties.forEach {
-        println("${it::name} = $it")
     }
     return statsUpdate
 }
