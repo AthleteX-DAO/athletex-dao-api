@@ -40,5 +40,7 @@ fun computeNFLPrice(feedUpdateItem: FootballFeedUpdateItem): Double {
             computedAmericanFootballPrice = 0.0
     }
 
-    return computedAmericanFootballPrice
+    // if WAR is less than 0, then set it to 0
+    // if WAR is greater than 1000, set to 1000
+    return computedAmericanFootballPrice.let { if (it < 0.0) 0.0 else if (it > 1000.0) 1000.0 else it }  //WAR price
 }
