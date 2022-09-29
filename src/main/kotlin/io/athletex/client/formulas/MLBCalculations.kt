@@ -39,5 +39,6 @@ fun computeMLBPrice(
     val statsNumerator = battingRuns + baseRunningRuns + fieldingRuns + positionalAdjustments + replacementRuns
 
     // if WAR is less than 0, then set it to 0
-    return (statsNumerator / avg50yrRPW).let { if (it < 0.0) 0.0 else it }  //WAR price
+    // if WAR is greater than 15000, set to 15000
+    return (statsNumerator / avg50yrRPW).let { if (it < 0.0) 0.0 else if (it > 15000.0) 15000.0 else it }  //WAR price
 }
