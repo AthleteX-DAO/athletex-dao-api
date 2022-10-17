@@ -6,6 +6,7 @@ import io.ktor.server.config.*
 enum class Sports {
     NFL,
     MLB,
+    NBA,
 }
 
 val appConfig = HoconApplicationConfig(ConfigFactory.load())
