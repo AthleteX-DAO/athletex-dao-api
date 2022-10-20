@@ -10,7 +10,6 @@ import java.sql.ResultSet
 data class NBAPlayerStats (
     val name: String,
     val id: Int,
-    val team: String,
     val stat_history: List<Stats>
 ): PlayerStats() {
     companion object {
@@ -25,7 +24,6 @@ data class NBAPlayerStats (
                     nbaPlayerStats = NBAPlayerStats(
                         name = row.getString(NBAPlayer::name.name),
                         id = row.getInt(NBAPlayer::id.name),
-                        team = row.getString(NBAPlayer::team.name),
                         stat_history = stats
                     )
                 }
