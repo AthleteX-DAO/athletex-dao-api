@@ -5,4 +5,10 @@ data class BasketballPlayerInsertItem(
     val name: String?,
     val price: Double?,
     val timestamp: String?,
+    val points: Double?,
+    val rebounds: Double?,
+    val assists: Double?,
+    val blocks: Double?,
+    val steals: Double?,
+    val minutesPlayed: Int?,
 )

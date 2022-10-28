@@ -32,7 +32,7 @@ data class BasketballFeedUpdateItem(
     @SerialName("FantasyPoints")
     val fantasyPoints: Double?,
     @SerialName("Minutes")
-    val minutes: Int?,
+    val minutesPlayed: Int?,
     @SerialName("Seconds")
     val seconds: Int?,
     @SerialName("FieldGoalsMade")
@@ -78,7 +78,7 @@ data class BasketballFeedUpdateItem(
     @SerialName("Steals")
     val steals: Double?,
     @SerialName("BlockedShots")
-    val blockedShots: Double?,
+    val blocks: Double?,
     @SerialName("Turnovers")
     val turnovers: Double?,
     @SerialName("PersonalFouls")
