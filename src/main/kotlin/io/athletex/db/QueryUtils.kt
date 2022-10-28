@@ -6,7 +6,8 @@ import java.time.format.DateTimeFormatter
 
 enum class Table(val tableName: String) {
     NFL("nfl"),
-    MLB("mlb")
+    MLB("mlb"),
+    NBA("nba")
 }
 
 fun dropTable(table: Table) =
