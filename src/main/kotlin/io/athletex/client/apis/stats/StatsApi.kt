@@ -7,10 +7,14 @@ import io.athletex.client.apis.stats.models.BaseballFeedUpdateItem
 import io.athletex.client.apis.stats.models.BaseballPlayerInsertItem
 import io.athletex.client.apis.stats.models.FootballFeedUpdateItem
 import io.athletex.client.apis.stats.models.FootballPlayerInsertItem
+import io.athletex.client.apis.stats.models.BasketballFeedUpdateItem
+import io.athletex.client.apis.stats.models.BasketballPlayerInsertItem
 import io.athletex.client.formulas.computeNFLPrice
 import io.athletex.client.formulas.computeMLBPrice
+import io.athletex.client.formulas.computeNBAPrice
 import io.athletex.services.MLBPlayerService
 import io.athletex.services.NFLPlayerService
+import io.athletex.services.NBAPlayerService
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -20,11 +24,13 @@ import kotlin.reflect.full.memberProperties
 
 const val MLB_STATS_ENDPOINT = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerSeasonStats/2022"
 const val NFL_STATS_ENDPOINT = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerSeasonStats/2022"
+const val NFL_STATS_ENDPOINT = "https://api.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2022"
 
 suspend fun syncStatsToDb(sports: Sports) {
     when (sports) {
         Sports.MLB -> syncMLBStatsToDb(MLBPlayerService(), appConfig)
         Sports.NFL -> syncNFLStatsToDb(NFLPlayerService(), appConfig)
+        Sports.NBA -> syncNBAStatsToDb(NBAPlayerService(), appConfig)
     }
 }
 
@@ -230,6 +236,48 @@ private fun parseMLBStatsUpdateResponse(playerStatsResponse: List<BaseballFeedUp
     }
     statsUpdate::class.memberProperties.forEach {
         println("${it::name} = $it")
+    }
+    return statsUpdate
+}
+
+
+
+suspend fun syncNBAStatsToDb(nbaPlayerService: NBAPlayerService, config: HoconApplicationConfig = appConfig) {
+    val nbaApiKey = config.property("api.nbaApiKey").getString()
+    val response = httpClient.request(NBA_STATS_ENDPOINT) {
+        method = HttpMethod.Get
+        headers.append("Ocp-Apim-Subscription-Key", nbaApiKey)
+    }
+    val playerStatsResponse = response.body<List<BasketballFeedUpdateItem>>()
+    val statsUpdate = parseNBAStatsUpdateResponse(playerStatsResponse)
+    nbaPlayerService.insertPlayers(statsUpdate)
+}
+
+private fun parseNBAStatsUpdateResponse(playerStatsResponse: List<BasketballFeedUpdateItem>): List<BasketballPlayerInsertItem> {
+    println("NBA stats response size = ${playerStatsResponse.size}")
+    val statsUpdate: MutableList<BasketballPlayerInsertItem> = playerStatsResponse.map { playerUpdate ->
+        val name = playerUpdate.name.removeNonSpacingMarks()
+        val computedPrice = computeNBAPrice(playerUpdate)
+        BasketballPlayerInsertItem(
+            name = name,
+            id = playerUpdate.playerID,
+            timestamp = playerUpdate.timestamp,
+            points = playerUpdate.points,
+            rebounds = playerUpdate.rebounds,
+            assists = playerUpdate.assists,
+            blocks = playerUpdate.blocks,
+            steals = playerUpdate.steals,
+            minutesPlayed = playerUpdate.minutesPlayed,
+            price = computedPrice
+        )
+    }.toMutableList()
+
+    getDefaultNbaPlayers().forEach { defaultPlayer ->
+        val existingPlayer = statsUpdate.find { it.id == defaultPlayer.id }
+        if (existingPlayer == null) {
+            println("adding missing player ${defaultPlayer.name}")
+            statsUpdate.add(defaultPlayer)
+        }
     }
     return statsUpdate
 }
