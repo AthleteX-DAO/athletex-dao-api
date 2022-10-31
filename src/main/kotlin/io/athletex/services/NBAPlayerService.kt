@@ -95,7 +95,7 @@ class NBAPlayerService : PlayerService {
         syncNBAStatsToDb(this)
     }
 
-    fun insertPlayers(players: List<FootballPlayerInsertItem>) {
+    fun insertPlayers(players: List<BasketballPlayerInsertItem>) {
         val qdbHost = appConfig.property("db.url").getString()
         val sender = Sender.builder().address("$qdbHost:9009").build()
         println("Inserting ${players.size} players")
