@@ -24,7 +24,7 @@ import kotlin.reflect.full.memberProperties
 
 const val MLB_STATS_ENDPOINT = "https://api.sportsdata.io/v3/mlb/stats/json/PlayerSeasonStats/2022"
 const val NFL_STATS_ENDPOINT = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerSeasonStats/2022"
-const val NFL_STATS_ENDPOINT = "https://api.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2022"
+const val NBA_STATS_ENDPOINT = "https://api.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2022"
 
 suspend fun syncStatsToDb(sports: Sports) {
     when (sports) {
