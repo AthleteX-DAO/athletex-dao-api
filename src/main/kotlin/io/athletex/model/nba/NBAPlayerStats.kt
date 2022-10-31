@@ -10,6 +10,8 @@ import java.sql.ResultSet
 data class NBAPlayerStats (
     val name: String,
     val id: Int,
+    val team: String,
+    val position: String,
     val stat_history: List<Stats>
 ): PlayerStats() {
     companion object {
@@ -24,11 +26,19 @@ data class NBAPlayerStats (
                     nbaPlayerStats = NBAPlayerStats(
                         name = row.getString(NBAPlayer::name.name),
                         id = row.getInt(NBAPlayer::id.name),
+                        team = row.getString(NBAPlayer::team.name),
+                        position = row.getString(NBAPlayer::position.name),
                         stat_history = stats
                     )
                 }
                 stats.add(
                     Stats(
+                        points = row.getString(NBAPlayer::points.name),
+                        rebounds = row.getString(NBAPlayer::rebounds.name),
+                        assists = row.getString(NBAPlayer::assists.name),
+                        blocks = row.getString(NBAPlayer::blocks.name),
+                        steals = row.getString(NBAPlayer::steals.name),
+                        minutesPlayed = row.getString(NBAPlayer::minutesPlayed.name),
                         price = row.getDouble(NBAPlayer::price.name),
                         timestamp = row.getString(NBAPlayer::timestamp.name)
                     )
@@ -40,6 +50,12 @@ data class NBAPlayerStats (
 
     @Serializable
     data class Stats(
+        val points: Double,
+        val rebounds: Double,
+        val assists: Doulble,
+        val blocks: Double,
+        val steals: Double,
+        val minutesPlayed: Double,
         val price: Double,
         val timestamp: String,
     )
