@@ -2,7 +2,6 @@ package io.athletex.client.formulas
 
 import io.athletex.client.apis.stats.models.BasketballFeedUpdateItem
 
-
 val nbaStatMult = mapOf(
     "Point" to 1,
     "3PM" to 1,
