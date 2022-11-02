@@ -4,6 +4,7 @@ import io.athletex.client.Client
 import io.athletex.client.formulas.mlbPositionalAdjustments
 import io.athletex.services.MLBPlayerService
 import io.athletex.services.NFLPlayerService
+import io.athletex.services.NBAPlayerService
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -30,6 +31,9 @@ internal class StatsApiTest {
     private val nflPlayerResponse = this::class.java.classLoader
         .getResource("nfl_player_response.json")?.readText()
 
+    private val mockNbaService: NBAPlayerService = mockk()
+    private val nbaPlayerResponse = this::class.java.classLoader
+        .getResource("nba_player_response.json")?.readText()
 
     // MLB Test
 
@@ -52,6 +56,13 @@ internal class StatsApiTest {
                 "/v3/nfl/stats/json/PlayerSeasonStats/2022" -> {
                     respond(
                         content = ByteReadChannel("""$nflPlayerResponse"""),
+                        status = HttpStatusCode.OK,
+                        headers = headersOf(HttpHeaders.ContentType, "application/json")
+                    )
+                }
+                "/v3/nba/stats/json/PlayerSeasonStats/2022" -> {
+                    respond(
+                        content = ByteReadChannel("""$nbaPlayerResponse"""),
                         status = HttpStatusCode.OK,
                         headers = headersOf(HttpHeaders.ContentType, "application/json")
                     )
@@ -80,6 +91,7 @@ internal class StatsApiTest {
         every { Client.httpClient } returns apiClient
         every { mockMlbService.insertPlayers(any()) } just Runs
         every { mockNflService.insertPlayers(any()) } just Runs
+        every { mockNbaService.insertPlayers(any()) } just Runs
     }
 
     @Test
@@ -118,4 +130,21 @@ internal class StatsApiTest {
     }
 
 
+    @Test
+    fun `when request returns successfully, then insert stats into database NBA`(): Unit = runBlocking {
+        syncNBAStatsToDb(mockNbaService, appConfiguration)
+        verify {
+            mockNbaService.insertPlayers(withArg {
+                assertTrue { it.isNotEmpty() }
+                it.forEach { item ->
+                    assertTrue { !item.price!!.isNaN() }
+                    assertTrue { (item.price ?: 0.0) >= 0 }
+                    println("name: ${item.name}, id: ${item.id}, price: ${item.price}")
+                }
+                println("complete")
+            })
+        }
+
+    }
+    
 }
