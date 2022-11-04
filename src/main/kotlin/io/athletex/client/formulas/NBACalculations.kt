@@ -17,17 +17,17 @@ val nbaStatMult = mapOf(
 )
 
 fun computeNBAPrice(feedUpdateItem: BasketballFeedUpdateItem): Double {
-    var fantasyPoints = (((feedUpdateItem.points ?: 0.0) * nbaStatMult["Point"])
-                    +((feedUpdateItem.threePointersMade ?: 0.0) * nbaStatMult["3PM"])
-                    +((feedUpdateItem.fieldGoalsAttempted ?: 0.0) * nbaStatMult["FGA"])
-                    +((feedUpdateItem.fieldGoalsMade ?: 0.0) * nbaStatMult["FGM"])
-                    +((feedUpdateItem.freeThrowsAttempted ?: 0.0) * nbaStatMult["FTA"])
-                    +((feedUpdateItem.freeThrowsMade ?: 0.0) * nbaStatMult["FTM"])
-                    +((feedUpdateItem.rebounds ?: 0.0) * nbaStatMult["REB"])
-                    +((feedUpdateItem.assists ?: 0.0) * nbaStatMult["AST"])
-                    +((feedUpdateItem.steals ?: 0.0) * nbaStatMult["STL"])
-                    +((feedUpdateItem.blocks ?: 0.0) * nbaStatMult["BLK"])
-                    +((feedUpdateItem.turnovers ?: 0.0) * nbaStatMult["TOV"])
+    var fantasyPoints = (((feedUpdateItem.points ?: 0.0)            * (nbaStatMult["Point"] ?: 0.0))
+                    +((feedUpdateItem.threePointersMade ?: 0.0)     * (nbaStatMult["3PM"]   ?: 0.0))
+                    +((feedUpdateItem.fieldGoalsAttempted ?: 0.0)   * (nbaStatMult["FGA"]   ?: 0.0))
+                    +((feedUpdateItem.fieldGoalsMade ?: 0.0)        * (nbaStatMult["FGM"]   ?: 0.0))
+                    +((feedUpdateItem.freeThrowsAttempted ?: 0.0)   * (nbaStatMult["FTA"]   ?: 0.0))
+                    +((feedUpdateItem.freeThrowsMade ?: 0.0)        * (nbaStatMult["FTM"]   ?: 0.0))
+                    +((feedUpdateItem.rebounds ?: 0.0)              * (nbaStatMult["REB"]   ?: 0.0))
+                    +((feedUpdateItem.assists ?: 0.0)               * (nbaStatMult["AST"]   ?: 0.0))
+                    +((feedUpdateItem.steals ?: 0.0)                * (nbaStatMult["STL"]   ?: 0.0))
+                    +((feedUpdateItem.blocks ?: 0.0)                * (nbaStatMult["BLK"]   ?: 0.0))
+                    +((feedUpdateItem.turnovers ?: 0.0)             * (nbaStatMult["TOV"]   ?: 0.0))
     )
     
     //fantasy points per minute normalized (* 100), for it to be between 0-1000AX

@@ -261,7 +261,6 @@ private fun parseNBAStatsUpdateResponse(playerStatsResponse: List<BasketballFeed
         BasketballPlayerInsertItem(
             name = name,
             id = playerUpdate.playerID,
-            timestamp = null,
             points = playerUpdate.points,
             threePointersMade = playerUpdate.threePointersMade,
             fieldGoalsAttempted = playerUpdate.fieldGoalsAttempted,
