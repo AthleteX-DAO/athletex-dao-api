@@ -17,7 +17,7 @@ val nbaStatMult = mapOf(
 )
 
 fun computeNBAPrice(feedUpdateItem: BasketballFeedUpdateItem): Double {
-    var fantasyPoints: Double? = (((feedUpdateItem.points ?: 0.0) * nbaStatMult["Point"])
+    var fantasyPoints = (((feedUpdateItem.points ?: 0.0) * nbaStatMult["Point"])
                     +((feedUpdateItem.threePointersMade ?: 0.0) * nbaStatMult["3PM"])
                     +((feedUpdateItem.fieldGoalsAttempted ?: 0.0) * nbaStatMult["FGA"])
                     +((feedUpdateItem.fieldGoalsMade ?: 0.0) * nbaStatMult["FGM"])
