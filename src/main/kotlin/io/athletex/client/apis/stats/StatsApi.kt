@@ -261,23 +261,22 @@ private fun parseNBAStatsUpdateResponse(playerStatsResponse: List<BasketballFeed
         BasketballPlayerInsertItem(
             name = name,
             id = playerUpdate.playerID,
-            timestamp = playerUpdate.timestamp,
             points = playerUpdate.points,
+            threePointersMade = playerUpdate.threePointersMade,
+            fieldGoalsAttempted = playerUpdate.fieldGoalsAttempted,
+            fieldGoalsMade = playerUpdate.fieldGoalsMade,
+            freeThrowsAttempted = playerUpdate.freeThrowsAttempted,
+            freeThrowsMade = playerUpdate.freeThrowsMade,
             rebounds = playerUpdate.rebounds,
             assists = playerUpdate.assists,
-            blocks = playerUpdate.blocks,
             steals = playerUpdate.steals,
+            blocks = playerUpdate.blocks,
+            turnovers = playerUpdate.turnovers,
             minutesPlayed = playerUpdate.minutesPlayed,
             price = computedPrice
         )
     }.toMutableList()
 
-    getDefaultNbaPlayers().forEach { defaultPlayer ->
-        val existingPlayer = statsUpdate.find { it.id == defaultPlayer.id }
-        if (existingPlayer == null) {
-            println("adding missing player ${defaultPlayer.name}")
-            statsUpdate.add(defaultPlayer)
-        }
-    }
+
     return statsUpdate
 }
