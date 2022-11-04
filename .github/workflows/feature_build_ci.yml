@@ -8,8 +8,8 @@
 name: Java CI with Gradle
 
 on:
-  pull_request:
-    branches: [ master, AX-1036-nba-backend-debug-failures-on-the-master-build ]
+  push:
+    branches: [ AX-1036-nba-backend-debug-failures-on-the-master-build ]
 
 jobs:
   build:
