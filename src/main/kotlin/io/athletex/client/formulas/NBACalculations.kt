@@ -3,17 +3,17 @@ package io.athletex.client.formulas
 import io.athletex.client.apis.stats.models.BasketballFeedUpdateItem
 
 val nbaStatMult = mapOf(
-    "Point" to 1,
-    "3PM" to 1,
-    "FGA" to -1,
-    "FGM" to 2,
-    "FTA" to -1,
-    "FTM" to 1,
-    "REB" to 1,
-    "AST" to 2,
-    "STL" to 4,
-    "BLK" to 4,
-    "TOV" to -2,
+    "Point" to 1.0,
+    "3PM" to 1.0,
+    "FGA" to -1.0,
+    "FGM" to 2.0,
+    "FTA" to -1.0,
+    "FTM" to 1.0,
+    "REB" to 1.0,
+    "AST" to 2.0,
+    "STL" to 4.0,
+    "BLK" to 4.0,
+    "TOV" to -2.0,
 )
 
 fun computeNBAPrice(feedUpdateItem: BasketballFeedUpdateItem): Double {
