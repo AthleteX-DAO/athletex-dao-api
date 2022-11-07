@@ -33,12 +33,12 @@ data class NBAPlayerStats (
                 }
                 stats.add(
                     Stats(
-                        points = row.getString(NBAPlayer::points.name),
-                        rebounds = row.getString(NBAPlayer::rebounds.name),
-                        assists = row.getString(NBAPlayer::assists.name),
-                        blocks = row.getString(NBAPlayer::blocks.name),
-                        steals = row.getString(NBAPlayer::steals.name),
-                        minutesPlayed = row.getString(NBAPlayer::minutesPlayed.name),
+                        points = row.getDouble(NBAPlayer::points.name),
+                        rebounds = row.getDouble(NBAPlayer::rebounds.name),
+                        assists = row.getDouble(NBAPlayer::assists.name),
+                        blocks = row.getDouble(NBAPlayer::blocks.name),
+                        steals = row.getDouble(NBAPlayer::steals.name),
+                        minutesPlayed = row.getDouble(NBAPlayer::minutesPlayed.name),
                         price = row.getDouble(NBAPlayer::price.name),
                         timestamp = row.getString(NBAPlayer::timestamp.name)
                     )
@@ -52,7 +52,7 @@ data class NBAPlayerStats (
     data class Stats(
         val points: Double,
         val rebounds: Double,
-        val assists: Doulble,
+        val assists: Double,
         val blocks: Double,
         val steals: Double,
         val minutesPlayed: Double,
