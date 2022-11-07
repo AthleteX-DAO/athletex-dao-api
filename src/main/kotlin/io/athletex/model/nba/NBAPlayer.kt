@@ -8,6 +8,8 @@ import java.sql.ResultSet
 data class NBAPlayer(
     override val id: Int,
     override val name: String,
+    val team: String,
+    val postion: String,
     val points: Double,
     val rebounds: Double,
     val assists: Double,
@@ -22,6 +24,8 @@ data class NBAPlayer(
             return NBAPlayer(
                 id = row.getInt(NBAPlayer::id.name),
                 name = row.getString(NBAPlayer::name.name),
+                team = row.getString(NBAPlayer::team.name),
+                position = row.getString(NBAPlayer::position.name),
                 points = row.getDouble(NBAPlayer::points.name),
                 rebounds = row.getDouble(NBAPlayer::rebounds.name),
                 assists = row.getDouble(NBAPlayer::assists.name),
