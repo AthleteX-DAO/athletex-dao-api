@@ -31,7 +31,10 @@ fun computeNBAPrice(feedUpdateItem: BasketballFeedUpdateItem): Double {
     )
     
     //fantasy points per minute normalized (* 100), for it to be between 0-1000AX
-    var fppmN: Double = (fantasyPoints / (feedUpdateItem.minutesPlayed ?: 0.0)) * 100
+    var minutes = feedUpdateItem.minutesPlayed ?: 1.0
+    if (minutes == 0.0) minutes = 1.0
+
+    var fppmN: Double = (fantasyPoints / minutes) * 100.0
 
     return fppmN
 }

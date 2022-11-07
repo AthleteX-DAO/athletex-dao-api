@@ -9,7 +9,7 @@ data class NBAPlayer(
     override val id: Int,
     override val name: String,
     val team: String,
-    val postion: String,
+    val position: String,
     val points: Double,
     val rebounds: Double,
     val assists: Double,
