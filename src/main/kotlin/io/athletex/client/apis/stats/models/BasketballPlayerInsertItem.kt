@@ -4,7 +4,6 @@ data class BasketballPlayerInsertItem(
     val id: Int?,
     val name: String?,
     val price: Double?,
-    val timestamp: String?,
     val points: Double?,
     val threePointersMade: Double?,
     val fieldGoalsAttempted: Double?,
