@@ -16,7 +16,7 @@ data class BasketballFeedUpdateItem(
     @SerialName("Season")
     val season: Int?,
     @SerialName("Name")
-    val name: String,
+    val name: String?,
     @SerialName("Team")
     val team: String?,
     @SerialName("Position")
