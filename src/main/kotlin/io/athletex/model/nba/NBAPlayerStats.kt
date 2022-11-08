@@ -33,18 +33,18 @@ data class NBAPlayerStats (
                 }
                 stats.add(
                     Stats(
-                        points = row.getString(NBAPlayer::points.name),
-                        threePointersMade = row.getString(NBAPlayer::threePointersMade.name),
-                        fieldGoalsAttempted = row.getString(NBAPlayer::fieldGoalsAttempted.name),
-                        fieldGoalsMade = row.getString(NBAPlayer::fieldGoalsMade.name),
-                        freeThrowsAttempted = row.getString(NBAPlayer::freeThrowsAttempted.name),
-                        freeThrowsMade = row.getString(NBAPlayer::freeThrowsMade.name),
-                        rebounds = row.getString(NBAPlayer::rebounds.name),
-                        assists = row.getString(NBAPlayer::assists.name),
-                        steals = row.getString(NBAPlayer::steals.name),
-                        blocks = row.getString(NBAPlayer::blocks.name),
-                        turnovers = row.getString(NBAPlayer::turnovers.name),
-                        minutesPlayed = row.getString(NBAPlayer::minutesPlayed.name),
+                        points = row.getDouble(NBAPlayer::points.name),
+                        threePointersMade = row.getDouble(NBAPlayer::threePointersMade.name),
+                        fieldGoalsAttempted = row.getDouble(NBAPlayer::fieldGoalsAttempted.name),
+                        fieldGoalsMade = row.getDouble(NBAPlayer::fieldGoalsMade.name),
+                        freeThrowsAttempted = row.getDouble(NBAPlayer::freeThrowsAttempted.name),
+                        freeThrowsMade = row.getDouble(NBAPlayer::freeThrowsMade.name),
+                        rebounds = row.getDouble(NBAPlayer::rebounds.name),
+                        assists = row.getDouble(NBAPlayer::assists.name),
+                        blocks = row.getDouble(NBAPlayer::blocks.name),
+                        steals = row.getDouble(NBAPlayer::steals.name),
+                        turnovers = row.getDouble(NBAPlayer::turnovers.name),
+                        minutesPlayed = row.getDouble(NBAPlayer::minutesPlayed.name),
                         price = row.getDouble(NBAPlayer::price.name),
                         timestamp = row.getString(NBAPlayer::timestamp.name)
                     )
