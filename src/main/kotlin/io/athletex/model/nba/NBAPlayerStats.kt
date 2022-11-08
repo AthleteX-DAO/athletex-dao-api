@@ -39,6 +39,11 @@ data class NBAPlayerStats (
                         blocks = row.getDouble(NBAPlayer::blocks.name),
                         steals = row.getDouble(NBAPlayer::steals.name),
                         minutesPlayed = row.getDouble(NBAPlayer::minutesPlayed.name),
+                        threePointersMade = row.getDouble(NBAPlayer::threePointersMade.name),
+                        fieldGoalsAttempted = row.getDouble(NBAPlayer::fieldGoalsAttempted.name),
+                        fieldGoalsMade = row.getDouble(NBAPlayer::fieldGoalsMade.name),
+                        freeThrowsAttempted = row.getDouble(NBAPlayer::freeThrowsAttempted.name),
+                        freeThrowsMade = row.getDouble(NBAPlayer::freeThrowsMade.name),
                         price = row.getDouble(NBAPlayer::price.name),
                         timestamp = row.getString(NBAPlayer::timestamp.name)
                     )
@@ -51,10 +56,16 @@ data class NBAPlayerStats (
     @Serializable
     data class Stats(
         val points: Double,
+        val threePointersMade: Double,
+        val fieldGoalsAttempted: Double,
+        val fieldGoalsMade: Double,
+        val freeThrowsAttempted: Double,
+        val freeThrowsMade: Double,
         val rebounds: Double,
         val assists: Double,
-        val blocks: Double,
         val steals: Double,
+        val blocks: Double,
+        val turnovers: Double,
         val minutesPlayed: Double,
         val price: Double,
         val timestamp: String,
