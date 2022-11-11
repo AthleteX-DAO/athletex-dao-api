@@ -34,7 +34,6 @@ fun computeNBAPrice(feedUpdateItem: BasketballFeedUpdateItem): Double {
     var minutes: Double = (feedUpdateItem.minutesPlayed)?.toDouble() ?: 1.0
     if (minutes == 0.0) minutes = 1.0
 
-
     var fppmN: Double = (fantasyPoints / minutes) * 100.0
 
     return fppmN.let { if (it < 0.0) 0.0 else if (it > 1000.0) 1000.0 else it }  //WAR price
