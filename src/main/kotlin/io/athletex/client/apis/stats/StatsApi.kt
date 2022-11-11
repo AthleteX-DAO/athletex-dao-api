@@ -274,8 +274,10 @@ private fun parseNBAStatsUpdateResponse(playerStatsResponse: List<BasketballFeed
             turnovers = playerUpdate.turnovers,
             minutesPlayed = playerUpdate.minutesPlayed,
             price = computedPrice
+            
         )
     }.toMutableList()
+
 
 
     return statsUpdate

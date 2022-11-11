@@ -11,10 +11,16 @@ data class NBAPlayer(
     val team: String,
     val position: String,
     val points: Double,
+    val threePointersMade: Double,
+    val fieldGoalsAttempted: Double,
+    val fieldGoalsMade: Double,
+    val freeThrowsAttempted: Double,
+    val freeThrowsMade: Double,
     val rebounds: Double,
     val assists: Double,
     val blocks: Double,
     val steals: Double,
+    val turnovers: Double,
     val minutesPlayed: Double,
     override val price: Double,
     override val timestamp: String,
@@ -27,10 +33,16 @@ data class NBAPlayer(
                 team = row.getString(NBAPlayer::team.name),
                 position = row.getString(NBAPlayer::position.name),
                 points = row.getDouble(NBAPlayer::points.name),
+                threePointersMade = row.getDouble(NBAPlayer::threePointersMade.name),
+                fieldGoalsAttempted = row.getDouble(NBAPlayer::fieldGoalsAttempted.name),
+                fieldGoalsMade = row.getDouble(NBAPlayer::fieldGoalsMade.name),
+                freeThrowsAttempted = row.getDouble(NBAPlayer::freeThrowsAttempted.name),
+                freeThrowsMade = row.getDouble(NBAPlayer::freeThrowsMade.name),
                 rebounds = row.getDouble(NBAPlayer::rebounds.name),
                 assists = row.getDouble(NBAPlayer::assists.name),
                 blocks = row.getDouble(NBAPlayer::blocks.name),
                 steals = row.getDouble(NBAPlayer::steals.name),
+                turnovers = row.getDouble(NBAPlayer::turnovers.name),
                 minutesPlayed = row.getDouble(NBAPlayer::minutesPlayed.name),
                 price = row.getDouble(NBAPlayer::price.name),
                 timestamp = row.getString(NBAPlayer::timestamp.name)
@@ -38,3 +50,4 @@ data class NBAPlayer(
         }
     }
 }
+
